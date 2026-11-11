@@ -26,7 +26,6 @@ import {
   ExternalLink,
   CheckCircle2,
   Check,
-  RotateCw,
 } from 'lucide-react';
 
 export default function DashboardPage() {
@@ -39,8 +38,7 @@ export default function DashboardPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('ALL');
   const [selectedRowId, setSelectedRowId] = useState<number>(3); // Row 3 highlighted by default
-  const [timeframe, setTimeframe] = useState<'hari_ini' | '7_hari' | '30_hari' | 'kustom'>('7_hari');
-  const [scopeFilter, setScopeFilter] = useState<'semua' | 'kandidat' | 'divisi'>('semua');
+
 
   // Dropdown States
   const [showAddMenu, setShowAddMenu] = useState(false);
@@ -242,10 +240,10 @@ export default function DashboardPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900">
-              Analitik
+              Dasbor
             </h1>
             <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
-              Lihat aktivitas seleksi pendaftar, kapasitas divisi, dan rekomendasi Profile Matching untuk @ampufess.
+              Ringkasan data seleksi, kapasitas divisi, dan progres kandidat kepanitiaan.
             </p>
           </div>
 
@@ -439,213 +437,11 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Filter Pills Bar & Action Controls */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pt-2">
-          {/* Timeframe Filter Pills */}
-          <div className="flex items-center gap-1.5 bg-gray-100/70 p-1 rounded-xl self-start">
-            {[
-              { id: 'hari_ini', label: 'Hari ini' },
-              { id: '7_hari', label: '7 hari' },
-              { id: '30_hari', label: '30 hari' },
-              { id: 'kustom', label: 'Kustom' },
-            ].map((t) => (
-              <button
-                key={t.id}
-                type="button"
-                onClick={() => setTimeframe(t.id as any)}
-                className={`px-3 py-1 text-xs font-semibold rounded-lg transition cursor-pointer ${
-                  timeframe === t.id
-                    ? 'bg-white text-gray-900 shadow-2xs'
-                    : 'text-gray-500 hover:text-gray-800'
-                }`}
-              >
-                {t.label}
-              </button>
-            ))}
-          </div>
 
-          {/* Right Controls: Scope Filters + Refresh */}
-          <div className="flex items-center gap-2 self-start md:self-auto">
-            <div className="flex items-center gap-1 bg-gray-100/70 p-1 rounded-xl">
-              {[
-                { id: 'semua', label: 'Semua' },
-                { id: 'kandidat', label: 'Kandidat' },
-                { id: 'divisi', label: 'Divisi' },
-              ].map((s) => (
-                <button
-                  key={s.id}
-                  type="button"
-                  onClick={() => setScopeFilter(s.id as any)}
-                  className={`px-3 py-1 text-xs font-semibold rounded-lg transition cursor-pointer ${
-                    scopeFilter === s.id
-                      ? 'bg-white text-gray-900 shadow-2xs'
-                      : 'text-gray-500 hover:text-gray-800'
-                  }`}
-                >
-                  {s.label}
-                </button>
-              ))}
-            </div>
-
-            <button
-              type="button"
-              onClick={() => {
-                toast.success('Data analitik berhasil dimuat ulang');
-              }}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-gray-700 bg-white border border-gray-200/80 hover:bg-gray-50 rounded-xl transition shadow-2xs cursor-pointer"
-            >
-              <RotateCw size={13} className="text-gray-500" />
-              <span>Muat ulang</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Footnote text */}
-        <div className="pt-2 border-t border-gray-100/80 flex flex-col sm:flex-row sm:items-center justify-between text-xs text-gray-400 gap-1">
-          <span>5 November 2026 – 11 November 2026 · WIB</span>
-          <span>Dibandingkan 29 Okt – 4 Nov, hingga jam WIB yang sama.</span>
-        </div>
       </div>
 
-      {/* ================= 2. 4 METRIC / STAT CARDS (MATCHING REFERENCE IMAGE) ================= */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Metric Card 1 */}
-        <div className="bg-white rounded-2xl border border-gray-200/80 p-5 shadow-xs flex flex-col justify-between hover:border-gray-300 transition-colors">
-          <div>
-            <h3 className="text-xs sm:text-sm font-semibold text-gray-800">Postingan dipublikasikan</h3>
-            <p className="text-[11px] text-gray-400 mt-0.5 leading-snug">
-              Setiap publikasi per platform dihitung satu kali.
-            </p>
-          </div>
-          <div className="mt-4">
-            <span className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">
-              {kandidats.length || 14}
-            </span>
-            <p className="text-[11px] text-gray-400 mt-2">
-              Belum ada pembanding sebelumnya 0
-            </p>
-          </div>
-        </div>
 
-        {/* Metric Card 2 */}
-        <div className="bg-white rounded-2xl border border-gray-200/80 p-5 shadow-xs flex flex-col justify-between hover:border-gray-300 transition-colors">
-          <div>
-            <h3 className="text-xs sm:text-sm font-semibold text-gray-800">Sender aktif</h3>
-            <p className="text-[11px] text-gray-400 mt-0.5 leading-snug">
-              Sender unik yang mempublikasikan pada periode ini.
-            </p>
-          </div>
-          <div className="mt-4">
-            <span className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">
-              {divisis.length || 5}
-            </span>
-            <p className="text-[11px] text-gray-400 mt-2">
-              Belum ada pembanding sebelumnya 0
-            </p>
-          </div>
-        </div>
-
-        {/* Metric Card 3 */}
-        <div className="bg-white rounded-2xl border border-gray-200/80 p-5 shadow-xs flex flex-col justify-between hover:border-gray-300 transition-colors">
-          <div>
-            <h3 className="text-xs sm:text-sm font-semibold text-gray-800">Sender baru</h3>
-            <p className="text-[11px] text-gray-400 mt-0.5 leading-snug">
-              Publikasi pertama di akun ini terjadi pada periode ini.
-            </p>
-          </div>
-          <div className="mt-4">
-            <span className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">
-              4
-            </span>
-            <p className="text-[11px] text-gray-400 mt-2">
-              Belum ada pembanding sebelumnya 0
-            </p>
-          </div>
-        </div>
-
-        {/* Metric Card 4 */}
-        <div className="bg-white rounded-2xl border border-gray-200/80 p-5 shadow-xs flex flex-col justify-between hover:border-gray-300 transition-colors">
-          <div>
-            <h3 className="text-xs sm:text-sm font-semibold text-gray-800">Sender kembali</h3>
-            <p className="text-[11px] text-gray-400 mt-0.5 leading-snug">
-              Aktif pada periode ini dan sudah pernah mempublikasikan.
-            </p>
-          </div>
-          <div className="mt-4">
-            <span className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">
-              1
-            </span>
-            <p className="text-[11px] text-gray-400 mt-2">
-              Belum ada pembanding sebelumnya 0
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* ================= 3. TREN PUBLIKASI / STATISTIK SECTION (MATCHING REFERENCE IMAGE) ================= */}
-      <div className="bg-white rounded-2xl border border-gray-200/80 p-5 sm:p-6 shadow-xs space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-          <div>
-            <h2 className="text-base sm:text-lg font-bold text-gray-900">Tren publikasi</h2>
-            <p className="text-xs text-gray-400 mt-0.5">
-              Jumlah postingan yang dipublikasikan setiap hari, per platform.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-3 text-xs text-gray-500">
-            <span className="inline-flex items-center gap-1.5 font-medium">
-              <span className="w-2.5 h-2.5 rounded-xs bg-blue-600" /> Instagram
-            </span>
-            <span className="inline-flex items-center gap-1.5 font-medium">
-              <span className="w-2.5 h-2.5 rounded-xs bg-teal-500" /> Threads
-            </span>
-          </div>
-        </div>
-
-        {/* Line Chart Visual SVG (Matching Reference Image) */}
-        <div className="pt-4 pb-2">
-          <div className="h-44 sm:h-52 w-full relative">
-            <svg className="w-full h-full overflow-visible" viewBox="0 0 700 160" preserveAspectRatio="none">
-              {/* Horizontal Grid lines */}
-              <line x1="0" y1="20" x2="700" y2="20" stroke="#f1f5f9" strokeWidth="1" />
-              <line x1="0" y1="60" x2="700" y2="60" stroke="#f1f5f9" strokeWidth="1" />
-              <line x1="0" y1="100" x2="700" y2="100" stroke="#f1f5f9" strokeWidth="1" />
-              <line x1="0" y1="140" x2="700" y2="140" stroke="#f1f5f9" strokeWidth="1" />
-
-              {/* Y Axis Labels */}
-              <text x="-15" y="24" fill="#94a3b8" fontSize="10" textAnchor="end">8</text>
-              <text x="-15" y="64" fill="#94a3b8" fontSize="10" textAnchor="end">6</text>
-              <text x="-15" y="104" fill="#94a3b8" fontSize="10" textAnchor="end">4</text>
-              <text x="-15" y="144" fill="#94a3b8" fontSize="10" textAnchor="end">2</text>
-              <text x="-15" y="160" fill="#94a3b8" fontSize="10" textAnchor="end">0</text>
-
-              {/* Threads Dotted Line (flat at 0) */}
-              <line x1="20" y1="150" x2="680" y2="150" stroke="#14b8a6" strokeWidth="2" strokeDasharray="4 4" />
-
-              {/* Instagram Trend Line (high, drops, rises, drops) */}
-              <polyline
-                fill="none"
-                stroke="#3b82f6"
-                strokeWidth="2.5"
-                points="20,40 130,150 240,140 350,140 460,140 570,85 680,135"
-              />
-            </svg>
-          </div>
-
-          {/* Dates row at bottom */}
-          <div className="flex justify-between text-[11px] text-gray-400 pt-3 px-2 border-t border-gray-100">
-            <span>5 Nov</span>
-            <span>6 Nov</span>
-            <span>7 Nov</span>
-            <span>8 Nov</span>
-            <span>9 Nov</span>
-            <span>10 Nov</span>
-            <span>11 Nov</span>
-          </div>
-        </div>
-      </div>
-
-      {/* ================= 4. KEBUTUHAN DIVISI & KUOTA ================= */}
+      {/* ================= 2. KEBUTUHAN DIVISI & KUOTA ================= */}
       <div className="bg-white rounded-2xl border border-gray-200/80 p-5 sm:p-6 shadow-xs space-y-4">
         <div className="flex items-center justify-between">
           <div>

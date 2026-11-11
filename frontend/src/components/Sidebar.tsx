@@ -18,7 +18,7 @@ interface SidebarProps {
 }
 
 const navItems = [
-  { to: '/dashboard', label: 'Analitik', sublabel: 'Overview', icon: LayoutDashboard },
+  { to: '/dashboard', label: 'Dasbor', sublabel: 'Overview', icon: LayoutDashboard },
   { to: '/divisi', label: 'Recruitment', sublabel: 'Master Divisi', icon: Building2 },
   { to: '/parameters', label: 'Interview', sublabel: 'Parameter & Target', icon: SlidersHorizontal },
   { to: '/kandidat', label: 'Onboarding', sublabel: 'Data Kandidat', icon: Users },
@@ -29,7 +29,7 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
   const { user, logout } = useAuth();
 
   const displayName = user?.name || 'Sara Abraham';
-  const displayRole = user?.email ? `@${user.email.split('@')[0]}` : '@ampufess';
+  const displayRole = user?.email ? `@${user.email.split('@')[0]}` : '@admin';
 
   return (
     <>
@@ -42,7 +42,7 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
         />
       )}
 
-      {/* Sidebar Container (matching reference image minbat style) */}
+      {/* Sidebar Container */}
       <aside
         className={`fixed inset-y-0 left-0 z-50 w-64 h-screen shrink-0 flex flex-col bg-white border-r border-gray-200/80 transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 ${
           isOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full'
@@ -56,10 +56,10 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
             </div>
             <div className="min-w-0">
               <h1 className="text-base font-extrabold tracking-tight text-gray-900 leading-none">
-                minbat
+                SIPANDA
               </h1>
               <p className="text-[9px] font-semibold text-gray-400 tracking-wider uppercase mt-1 leading-none">
-                INSTAGRAM &amp; THREADS
+                SELEKSI KEPANITIAAN
               </p>
             </div>
           </div>
@@ -75,7 +75,7 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
           </button>
         </div>
 
-        {/* User Account Card (matching reference image) */}
+        {/* User Account Card */}
         <div className="mx-3 mb-4 p-2.5 rounded-xl border border-gray-200/80 bg-white hover:bg-gray-50/60 transition flex items-center justify-between shadow-2xs">
           <div className="flex items-center gap-2.5 min-w-0">
             <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-orange-400 to-amber-500 text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-2xs">
@@ -89,9 +89,9 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
                 {displayRole}
               </p>
               <div className="mt-1">
-                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-medium bg-blue-50 text-blue-700 border border-blue-100">
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse" />
-                  Bot aktif
+                <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                  Aktif
                 </span>
               </div>
             </div>
@@ -134,7 +134,7 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
           ))}
         </nav>
 
-        {/* Bottom actions (Theme & Logout, matching reference image) */}
+        {/* Bottom actions (Theme & Logout) */}
         <div className="p-3 mt-auto border-t border-gray-100/90 space-y-1">
           {/* Theme toggle row */}
           <div className="flex items-center justify-between px-3 py-2 text-xs font-medium text-gray-600 hover:bg-gray-50 rounded-xl cursor-pointer transition">
@@ -160,9 +160,9 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
             <span>Keluar semua akun</span>
           </button>
 
-          {/* Footer copyright note */}
+          {/* Footer note */}
           <div className="px-2 pt-2 text-[9px] font-semibold text-gray-300 uppercase tracking-wider text-center">
-            MINBAT-THIG · ADMIN AKUN MENFESS
+            SIPANDA-SPK · SISTEM SELEKSI KEPANITIAAN
           </div>
         </div>
       </aside>

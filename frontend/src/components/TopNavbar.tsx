@@ -12,44 +12,42 @@ export default function TopNavbar({ onToggleSidebar }: TopNavbarProps) {
     const path = location.pathname;
     if (path === '/dashboard') {
       return [
-        { label: 'Dashboard', to: '/dashboard' },
-        { label: 'Analitik', to: '/dashboard' },
+        { label: 'Dasbor', to: '/dashboard' },
       ];
     }
     if (path.startsWith('/divisi')) {
       return [
-        { label: 'Dashboard', to: '/dashboard' },
+        { label: 'Dasbor', to: '/dashboard' },
         { label: 'Recruitment', to: '/divisi' },
       ];
     }
     if (path.startsWith('/parameters')) {
       return [
-        { label: 'Dashboard', to: '/dashboard' },
+        { label: 'Dasbor', to: '/dashboard' },
         { label: 'Interview', to: '/parameters' },
       ];
     }
     if (path.startsWith('/kandidat')) {
       return [
-        { label: 'Dashboard', to: '/dashboard' },
+        { label: 'Dasbor', to: '/dashboard' },
         { label: 'Onboarding', to: '/kandidat' },
       ];
     }
     if (path.startsWith('/spk/')) {
       return [
-        { label: 'Dashboard', to: '/dashboard' },
+        { label: 'Dasbor', to: '/dashboard' },
         { label: 'Perhitungan SPK', to: '/spk' },
         { label: 'Hasil Seleksi', to: path },
       ];
     }
     if (path.startsWith('/spk')) {
       return [
-        { label: 'Dashboard', to: '/dashboard' },
+        { label: 'Dasbor', to: '/dashboard' },
         { label: 'Perhitungan SPK', to: '/spk' },
       ];
     }
     return [
-      { label: 'Dashboard', to: '/dashboard' },
-      { label: 'Overview', to: '/dashboard' },
+      { label: 'Dasbor', to: '/dashboard' },
     ];
   };
 
@@ -68,7 +66,7 @@ export default function TopNavbar({ onToggleSidebar }: TopNavbarProps) {
           <Menu size={18} />
         </button>
 
-        {/* Clean Breadcrumb (matching reference image: "Dashboard / Analitik") */}
+        {/* Clean Breadcrumb */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-gray-400 font-medium">
           {breadcrumbs.map((crumb, idx) => (
             <div key={crumb.label} className="flex items-center gap-2">
