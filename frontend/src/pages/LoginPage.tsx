@@ -40,13 +40,8 @@ export default function LoginPage() {
   };
 
   return (
-    <div
-      className="min-h-screen w-full relative flex items-center justify-center p-4 overflow-hidden bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage: "url('/sky-clouds.jpg'), linear-gradient(180deg, #99cbee 0%, #b8ddf5 40%, #e2f1fc 100%)",
-      }}
-    >
-      {/* Top Left Brand (matching reference header) */}
+    <div className="min-h-screen w-full relative flex items-center justify-center p-4 overflow-hidden bg-[#f4f2fb]">
+      {/* Top Left Brand */}
       <div className="absolute top-6 left-6 sm:top-8 sm:left-10 z-20 flex items-center gap-2.5">
         <div className="w-8 h-8 rounded-lg bg-black text-white flex items-center justify-center shadow-xs">
           <svg
@@ -61,16 +56,16 @@ export default function LoginPage() {
         </span>
       </div>
 
-      {/* Concentric subtle circular rings in background (matching reference) */}
+      {/* Concentric subtle circular rings in background */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-        <div className="w-[480px] h-[480px] rounded-full border border-white/50 absolute" />
-        <div className="w-[720px] h-[720px] rounded-full border border-white/40 absolute" />
-        <div className="w-[960px] h-[960px] rounded-full border border-white/30 absolute" />
-        <div className="w-[1240px] h-[1240px] rounded-full border border-white/20 absolute" />
+        <div className="w-[480px] h-[480px] rounded-full border border-purple-200/50 absolute" />
+        <div className="w-[720px] h-[720px] rounded-full border border-purple-200/40 absolute" />
+        <div className="w-[960px] h-[960px] rounded-full border border-purple-200/30 absolute" />
+        <div className="w-[1240px] h-[1240px] rounded-full border border-purple-200/20 absolute" />
       </div>
 
-      {/* Floating Center Card (matching reference) */}
-      <div className="relative z-10 w-full max-w-[400px] sm:max-w-[420px] rounded-[32px] bg-gradient-to-b from-[#e8f4fc]/95 via-white/95 to-white/95 backdrop-blur-xl border border-white/80 shadow-2xl shadow-sky-900/10 p-7 sm:p-9 transition-all">
+      {/* Floating Center Card */}
+      <div className="relative z-10 w-full max-w-[400px] sm:max-w-[420px] rounded-[32px] bg-white border border-gray-100 shadow-2xl shadow-purple-900/10 p-7 sm:p-9 transition-all">
         {/* Top Floating Action Icon */}
         <div className="w-12 h-12 rounded-2xl bg-white border border-gray-100/90 shadow-sm flex items-center justify-center mx-auto mb-5 text-gray-800">
           <svg
