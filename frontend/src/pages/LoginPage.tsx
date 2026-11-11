@@ -54,13 +54,8 @@ export default function LoginPage() {
 
       {/* Top Left Brand */}
       <div className="absolute top-6 left-6 sm:top-8 sm:left-10 z-20 flex items-center gap-2.5">
-        <div className="w-8 h-8 rounded-lg bg-black text-white flex items-center justify-center shadow-xs">
-          <svg
-            className="w-4 h-4 fill-current text-white"
-            viewBox="0 0 24 24"
-          >
-            <path d="M12 2a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0 4-4 4 4 0 0 0-4-4zm-6 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4zm12 0a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4zm-6 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4z" />
-          </svg>
+        <div className="w-9 h-9 rounded-xl bg-white shadow-xs border border-white flex items-center justify-center p-1.5">
+          <img src="/logo.png" alt="SIPANDA Logo" className="w-full h-full object-contain" />
         </div>
         <span className="font-extrabold text-base tracking-tight text-gray-900">
           SIPANDA
@@ -77,21 +72,9 @@ export default function LoginPage() {
 
       {/* Floating Center Card */}
       <div className="relative z-10 w-full max-w-[400px] sm:max-w-[420px] rounded-[32px] bg-white/95 backdrop-blur-xl border border-white/90 shadow-2xl shadow-blue-900/10 p-7 sm:p-9 transition-all">
-        {/* Top Floating Action Icon */}
-        <div className="w-12 h-12 rounded-2xl bg-white border border-blue-100/80 shadow-xs flex items-center justify-center mx-auto mb-5 text-gray-800">
-          <svg
-            className="w-5 h-5 text-gray-800"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M15 8l4 4-4 4" />
-            <path d="M4 12h15" />
-            <path d="M20 5v14" />
-          </svg>
+        {/* Top Floating Logo */}
+        <div className="w-14 h-14 rounded-2xl bg-white border border-blue-100/80 shadow-xs flex items-center justify-center mx-auto mb-5 p-2.5">
+          <img src="/logo.png" alt="SIPANDA Logo" className="w-full h-full object-contain" />
         </div>
 
         {/* Title and Subtitle */}
