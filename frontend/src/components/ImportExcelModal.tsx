@@ -58,11 +58,11 @@ export default function ImportExcelModal({ isOpen, onClose, onImport }: Props) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs p-4">
-      <div className="bg-white rounded shadow-xl w-full max-w-lg p-6 animate-in fade-in zoom-in-95 duration-150 border border-gray-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs p-3 sm:p-4">
+      <div className="bg-white rounded-xl shadow-xl w-full max-w-lg p-4 sm:p-6 animate-in fade-in zoom-in-95 duration-150 border border-gray-200">
         <div className="flex items-center justify-between pb-3 border-b border-gray-100 mb-4">
           <div>
-            <h3 className="text-lg font-bold text-gray-900">Import Data Kandidat Massal</h3>
+            <h3 className="text-base sm:text-lg font-bold text-gray-900">Import Data Kandidat Massal</h3>
             <p className="text-xs text-gray-500">Unggah berkas Excel (.xlsx / .csv) sesuai format template</p>
           </div>
           <button type="button" onClick={onClose} className="text-gray-400 hover:text-gray-600 p-1 rounded">
@@ -71,7 +71,7 @@ export default function ImportExcelModal({ isOpen, onClose, onImport }: Props) {
         </div>
 
         <div
-          className={`border-2 border-dashed rounded p-8 text-center transition-colors cursor-pointer ${
+          className={`border-2 border-dashed rounded-lg p-6 sm:p-8 text-center transition-colors cursor-pointer ${
             dragActive ? 'border-blue-500 bg-blue-50/50' : 'border-gray-300 hover:border-gray-400'
           }`}
           onDragEnter={handleDrag}
@@ -85,7 +85,7 @@ export default function ImportExcelModal({ isOpen, onClose, onImport }: Props) {
               <div className="p-3 bg-emerald-50 rounded text-emerald-600">
                 <FileSpreadsheet size={36} />
               </div>
-              <p className="text-sm font-semibold text-gray-900">{file.name}</p>
+              <p className="text-sm font-semibold text-gray-900 break-all">{file.name}</p>
               <p className="text-xs text-gray-500">{(file.size / 1024).toFixed(1)} KB</p>
               <button
                 type="button"
@@ -93,7 +93,7 @@ export default function ImportExcelModal({ isOpen, onClose, onImport }: Props) {
                   e.stopPropagation();
                   setFile(null);
                 }}
-                className="text-xs text-rose-600 hover:underline mt-1 font-medium"
+                className="text-xs text-rose-600 hover:underline mt-1 font-medium cursor-pointer"
               >
                 Ganti berkas
               </button>
@@ -116,27 +116,27 @@ export default function ImportExcelModal({ isOpen, onClose, onImport }: Props) {
           />
         </div>
 
-        <div className="bg-amber-50 border border-amber-200 rounded p-3.5 mt-4 text-xs text-amber-900">
-          <div className="flex items-center justify-between font-bold mb-1 text-amber-950">
+        <div className="bg-amber-50 border border-amber-200 rounded p-3 sm:p-3.5 mt-4 text-xs text-amber-900">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between font-bold mb-1.5 text-amber-950 gap-1">
             <span className="flex items-center gap-1.5"><AlertCircle size={14} /> Struktur Header Kolom:</span>
             <button
               type="button"
               onClick={handleDownloadTemplate}
-              className="inline-flex items-center gap-1 text-blue-700 hover:text-blue-800 hover:underline cursor-pointer font-bold"
+              className="inline-flex items-center gap-1 text-blue-700 hover:text-blue-800 hover:underline cursor-pointer font-bold self-start sm:self-auto"
             >
               <Download size={13} /> Unduh Format Template
             </button>
           </div>
-          <p className="font-mono text-[11px] leading-relaxed">
+          <p className="font-mono text-[10.5px] sm:text-[11px] leading-relaxed break-all">
             nim, nama, pilihan_divisi_1, pilihan_divisi_2, minat_pilihan_1, minat_pilihan_2, k1, k2, k3, k4, k5
           </p>
         </div>
 
-        <div className="flex gap-3 mt-6">
+        <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 mt-5 sm:mt-6">
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 px-4 py-2.5 rounded border border-gray-300 text-gray-700 hover:bg-gray-50 text-sm font-medium transition cursor-pointer"
+            className="flex-1 px-4 py-2.5 rounded border border-gray-300 text-gray-700 hover:bg-gray-50 text-sm font-medium transition cursor-pointer order-2 sm:order-1"
           >
             Batal
           </button>
@@ -144,7 +144,7 @@ export default function ImportExcelModal({ isOpen, onClose, onImport }: Props) {
             type="button"
             onClick={handleSubmit}
             disabled={!file || importing}
-            className="flex-1 px-4 py-2.5 rounded bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 text-sm font-medium transition cursor-pointer"
+            className="flex-1 px-4 py-2.5 rounded bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 text-sm font-medium transition cursor-pointer order-1 sm:order-2"
           >
             {importing ? 'Mengimpor Data...' : 'Unggah & Proses'}
           </button>

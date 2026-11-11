@@ -11,83 +11,89 @@ function StatusBadge({ status, detail }: { status: string; detail: string }) {
   switch (status) {
     case 'direct':
       return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 whitespace-nowrap">
           <CheckCircle2 size={13} />
           {detail}
         </span>
       );
     case 'duplikat':
       return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200 whitespace-nowrap">
           <AlertTriangle size={13} className="text-amber-600" />
           ⚠️ {detail}
         </span>
       );
     case 'cross_division':
       return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200">
+        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200 whitespace-nowrap">
           <RefreshCw size={13} className="text-blue-600" />
           🔄 {detail}
         </span>
       );
     case 'unallocated':
       return (
-        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200">
+        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200 whitespace-nowrap">
           {detail}
         </span>
       );
     default:
-      return <span className="text-gray-500 text-xs">{detail || '-'}</span>;
+      return <span className="text-gray-500 text-xs whitespace-nowrap">{detail || '-'}</span>;
   }
 }
 
 export default function MasterMatrixTable({ data, isLocked, onApprove }: Props) {
   return (
     <div className="bg-white rounded shadow-xs border border-gray-200 overflow-hidden">
+      {/* Mobile swipe hint */}
+      <div className="md:hidden px-4 py-2 bg-slate-50 border-b border-gray-200 text-[11px] text-gray-500 flex items-center justify-between">
+        <span>Geser tabel untuk melihat seluruh data rekapitulasi</span>
+        <ArrowRight size={13} className="text-gray-400" />
+      </div>
+
       <div className="overflow-x-auto">
-        <table className="w-full text-sm text-left">
+        <table className="w-full text-sm text-left min-w-[1050px]">
           <thead className="bg-gray-50 text-gray-700 text-xs uppercase font-semibold border-b border-gray-200">
             <tr>
-              <th className="px-4 py-3.5">NIM</th>
-              <th className="px-4 py-3.5">Nama Kandidat</th>
-              <th className="px-4 py-3.5">Pilihan 1</th>
-              <th className="px-4 py-3.5">Pilihan 2</th>
-              <th className="px-4 py-3.5 text-center">Minat P1 / P2</th>
-              <th className="px-4 py-3.5 text-center">Skor P1</th>
-              <th className="px-4 py-3.5 text-center">Skor P2</th>
-              <th className="px-4 py-3.5">Rekomendasi Sistem</th>
-              <th className="px-4 py-3.5">Status / Flagging</th>
-              <th className="px-4 py-3.5 text-center">Action Admin</th>
+              <th className="px-4 py-3.5 whitespace-nowrap">NIM</th>
+              <th className="px-4 py-3.5 whitespace-nowrap">Nama Kandidat</th>
+              <th className="px-4 py-3.5 whitespace-nowrap">Pilihan 1</th>
+              <th className="px-4 py-3.5 whitespace-nowrap">Pilihan 2</th>
+              <th className="px-4 py-3.5 text-center whitespace-nowrap">Minat P1 / P2</th>
+              <th className="px-4 py-3.5 text-center whitespace-nowrap">Skor P1</th>
+              <th className="px-4 py-3.5 text-center whitespace-nowrap">Skor P2</th>
+              <th className="px-4 py-3.5 whitespace-nowrap">Rekomendasi Sistem</th>
+              <th className="px-4 py-3.5 whitespace-nowrap">Status / Flagging</th>
+              <th className="px-4 py-3.5 text-center whitespace-nowrap">Action Admin</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
             {data.map((item) => (
               <tr key={item.kandidat_id} className="hover:bg-blue-50/40 transition-colors">
-                <td className="px-4 py-3 font-mono text-xs text-gray-600 font-semibold">{item.nim}</td>
-                <td className="px-4 py-3 font-medium text-gray-900">{item.nama}</td>
-                <td className="px-4 py-3 text-gray-700">{item.pilihan_1}</td>
-                <td className="px-4 py-3 text-gray-700">{item.pilihan_2}</td>
-                <td className="px-4 py-3 text-center text-xs font-medium text-gray-600">
+                <td className="px-4 py-3 font-mono text-xs text-gray-600 font-semibold whitespace-nowrap">{item.nim}</td>
+                <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{item.nama}</td>
+                <td className="px-4 py-3 text-gray-700 whitespace-nowrap">{item.pilihan_1}</td>
+                <td className="px-4 py-3 text-gray-700 whitespace-nowrap">{item.pilihan_2}</td>
+                <td className="px-4 py-3 text-center text-xs font-medium text-gray-600 whitespace-nowrap">
                   <span className="bg-gray-100 px-2 py-0.5 rounded">
                     {item.minat_p1}% / {item.minat_p2}%
                   </span>
                 </td>
-                <td className="px-4 py-3 text-center font-mono font-bold text-gray-800">
+                <td className="px-4 py-3 text-center font-mono font-bold text-gray-800 whitespace-nowrap">
                   {item.skor_divisi_p1?.toFixed(2) ?? '0.00'}
                 </td>
-                <td className="px-4 py-3 text-center font-mono font-bold text-gray-800">
+                <td className="px-4 py-3 text-center font-mono font-bold text-gray-800 whitespace-nowrap">
                   {item.skor_divisi_p2?.toFixed(2) ?? '0.00'}
                 </td>
-                <td className="px-4 py-3">
+                <td className="px-4 py-3 whitespace-nowrap">
                   <span className="inline-flex items-center gap-1 font-semibold text-blue-700 bg-blue-50/70 px-2.5 py-1 rounded text-xs">
                     <ArrowRight size={13} className="text-blue-500" />
                     {item.rekomendasi_sistem}
                   </span>
                 </td>
-                <td className="px-4 py-3">
+                <td className="px-4 py-3 whitespace-nowrap">
                   <StatusBadge status={item.status} detail={item.rekomendasi_detail} />
                 </td>
-                <td className="px-4 py-3 text-center">
+                <td className="px-4 py-3 text-center whitespace-nowrap">
                   {!isLocked ? (
                     <button
                       type="button"
@@ -112,7 +118,7 @@ export default function MasterMatrixTable({ data, isLocked, onApprove }: Props) 
         </table>
       </div>
       {data.length === 0 && (
-        <div className="text-center py-12 text-gray-400 font-medium">
+        <div className="text-center py-12 text-gray-400 font-medium text-xs sm:text-sm">
           Belum ada data perhitungan untuk sesi ini.
         </div>
       )}

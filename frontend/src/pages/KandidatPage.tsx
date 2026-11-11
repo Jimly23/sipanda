@@ -7,7 +7,7 @@ import ConfirmDialog from '../components/ConfirmDialog';
 import Navbar from '../components/Navbar';
 import { TableSkeleton } from '../components/Skeleton';
 import toast from 'react-hot-toast';
-import { Plus, UploadCloud, Pencil, Trash2, X, Check, Users } from 'lucide-react';
+import { Plus, UploadCloud, Pencil, Trash2, X, Check, Users, ArrowRight } from 'lucide-react';
 
 export default function KandidatPage() {
   const { kandidats, loading, createKandidat, updateKandidat, deleteKandidat, importExcel } = useKandidat();
@@ -117,11 +117,11 @@ export default function KandidatPage() {
         title="Data Pendaftar / Kandidat"
         subtitle="Kelola data pendaftar melalui form manual satu per satu atau impor massal berkas Excel"
         actions={
-          <>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-2.5 w-full sm:w-auto">
             <button
               type="button"
               onClick={() => setShowImport(true)}
-              className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-lg text-sm font-semibold shadow-xs transition cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-lg text-sm font-semibold shadow-xs transition cursor-pointer"
             >
               <UploadCloud size={16} />
               Import Excel (.xlsx)
@@ -132,19 +132,19 @@ export default function KandidatPage() {
                 resetForm();
                 setShowForm(true);
               }}
-              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg text-sm font-semibold shadow-xs transition cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg text-sm font-semibold shadow-xs transition cursor-pointer"
             >
               <Plus size={16} />
               Entri Manual
             </button>
-          </>
+          </div>
         }
       />
 
       {/* Form Tambah/Edit */}
       {showForm && (
-        <div className="bg-white rounded border border-blue-200 p-6 shadow-xs animate-in fade-in zoom-in-95 duration-150">
-          <div className="flex items-center justify-between mb-5 pb-3 border-b border-gray-100">
+        <div className="bg-white rounded border border-blue-200 p-4 sm:p-6 shadow-xs animate-in fade-in zoom-in-95 duration-150">
+          <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-100">
             <h3 className="text-base font-bold text-gray-900">
               {editId ? 'Ubah Data Kandidat' : 'Form Entri Kandidat Manual'}
             </h3>
@@ -153,8 +153,8 @@ export default function KandidatPage() {
             </button>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">
                   NIM / ID Kandidat
@@ -183,7 +183,7 @@ export default function KandidatPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">
                   Pilihan Divisi 1
@@ -218,7 +218,7 @@ export default function KandidatPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">
                   Persentase Minat Pilihan 1 (K6) (%)
@@ -253,11 +253,11 @@ export default function KandidatPage() {
               <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-2">
                 Nilai Kompetensi Teknis (K1 s.d. K5: Skala 0–100)
               </label>
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5 sm:gap-3">
                 {kompetensiParams.map((p) => (
-                  <div key={p.id} className="bg-gray-50 p-3 rounded border border-gray-200">
+                  <div key={p.id} className="bg-gray-50 p-2.5 sm:p-3 rounded border border-gray-200">
                     <span className="block text-xs font-mono font-bold text-blue-700">{p.kode}</span>
-                    <span className="block text-[11px] text-gray-500 truncate mb-1.5">{p.nama}</span>
+                    <span className="block text-[11px] text-gray-500 truncate mb-1.5" title={p.nama}>{p.nama}</span>
                     <input
                       type="number"
                       min={0}
@@ -273,10 +273,10 @@ export default function KandidatPage() {
               </div>
             </div>
 
-            <div className="flex gap-2.5 pt-2">
+            <div className="flex flex-col sm:flex-row gap-2.5 pt-2">
               <button
                 type="submit"
-                className="inline-flex items-center gap-1.5 px-5 py-2.5 bg-blue-600 text-white rounded text-sm font-semibold hover:bg-blue-700 transition cursor-pointer"
+                className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 bg-blue-600 text-white rounded text-sm font-semibold hover:bg-blue-700 transition cursor-pointer"
               >
                 <Check size={16} />
                 {editId ? 'Perbarui Data' : 'Simpan Kandidat'}
@@ -284,7 +284,7 @@ export default function KandidatPage() {
               <button
                 type="button"
                 onClick={resetForm}
-                className="px-4 py-2.5 border border-gray-300 text-gray-700 rounded text-sm font-semibold hover:bg-gray-50 transition cursor-pointer"
+                className="inline-flex items-center justify-center px-4 py-2.5 border border-gray-300 text-gray-700 rounded text-sm font-semibold hover:bg-gray-50 transition cursor-pointer"
               >
                 Batal
               </button>
@@ -298,31 +298,37 @@ export default function KandidatPage() {
         <TableSkeleton rows={8} cols={12} />
       ) : (
         <div className="bg-white rounded shadow-xs border border-gray-200 overflow-hidden">
+          {/* Mobile swipe hint */}
+          <div className="md:hidden px-4 py-2 bg-slate-50 border-b border-gray-200 text-[11px] text-gray-500 flex items-center justify-between">
+            <span>Geser tabel untuk melihat seluruh data kandidat</span>
+            <ArrowRight size={13} className="text-gray-400" />
+          </div>
+
           <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left">
+            <table className="w-full text-sm text-left min-w-[980px]">
               <thead className="bg-gray-50 text-gray-700 text-xs uppercase font-semibold border-b border-gray-200">
                 <tr>
-                  <th className="px-4 py-3.5 text-center w-12">No</th>
-                  <th className="px-4 py-3.5">NIM</th>
-                  <th className="px-4 py-3.5">Nama Lengkap</th>
-                  <th className="px-4 py-3.5">Pilihan 1</th>
-                  <th className="px-4 py-3.5">Pilihan 2</th>
-                  <th className="px-4 py-3.5 text-center">Minat P1 / P2</th>
+                  <th className="px-4 py-3.5 text-center w-12 whitespace-nowrap">No</th>
+                  <th className="px-4 py-3.5 whitespace-nowrap">NIM</th>
+                  <th className="px-4 py-3.5 whitespace-nowrap">Nama Lengkap</th>
+                  <th className="px-4 py-3.5 whitespace-nowrap">Pilihan 1</th>
+                  <th className="px-4 py-3.5 whitespace-nowrap">Pilihan 2</th>
+                  <th className="px-4 py-3.5 text-center whitespace-nowrap">Minat P1 / P2</th>
                   {kompetensiParams.map((p) => (
-                    <th key={p.id} className="px-3 py-3.5 text-center font-mono">{p.kode}</th>
+                    <th key={p.id} className="px-3 py-3.5 text-center font-mono whitespace-nowrap">{p.kode}</th>
                   ))}
-                  <th className="px-4 py-3.5 text-center w-24">Aksi</th>
+                  <th className="px-4 py-3.5 text-center w-24 whitespace-nowrap">Aksi</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {kandidats.map((k, i) => (
                   <tr key={k.id} className="hover:bg-gray-50/75 transition-colors">
                     <td className="px-4 py-3.5 text-center font-bold text-gray-500">{i + 1}</td>
-                    <td className="px-4 py-3.5 font-mono text-xs font-semibold text-gray-800">{k.nim}</td>
-                    <td className="px-4 py-3.5 font-medium text-gray-900">{k.nama}</td>
-                    <td className="px-4 py-3.5 text-xs text-gray-700">{k.pilihan_divisi1?.nama || '-'}</td>
-                    <td className="px-4 py-3.5 text-xs text-gray-700">{k.pilihan_divisi2?.nama || '-'}</td>
-                    <td className="px-4 py-3.5 text-center text-xs font-semibold text-gray-600">
+                    <td className="px-4 py-3.5 font-mono text-xs font-semibold text-gray-800 whitespace-nowrap">{k.nim}</td>
+                    <td className="px-4 py-3.5 font-medium text-gray-900 whitespace-nowrap">{k.nama}</td>
+                    <td className="px-4 py-3.5 text-xs text-gray-700 whitespace-nowrap">{k.pilihan_divisi1?.nama || '-'}</td>
+                    <td className="px-4 py-3.5 text-xs text-gray-700 whitespace-nowrap">{k.pilihan_divisi2?.nama || '-'}</td>
+                    <td className="px-4 py-3.5 text-center text-xs font-semibold text-gray-600 whitespace-nowrap">
                       <span className="bg-gray-100 px-2 py-0.5 rounded">
                         {k.minat_pilihan_1}% / {k.minat_pilihan_2}%
                       </span>
@@ -330,12 +336,12 @@ export default function KandidatPage() {
                     {kompetensiParams.map((p) => {
                       const nk = k.nilai_kandidats?.find((n) => n.parameter_id === p.id);
                       return (
-                        <td key={p.id} className="px-3 py-3.5 text-center font-mono text-xs font-semibold text-gray-700">
+                        <td key={p.id} className="px-3 py-3.5 text-center font-mono text-xs font-semibold text-gray-700 whitespace-nowrap">
                           {nk ? nk.nilai : '-'}
                         </td>
                       );
                     })}
-                    <td className="px-4 py-3.5 text-center">
+                    <td className="px-4 py-3.5 text-center whitespace-nowrap">
                       <div className="flex items-center justify-center gap-1.5">
                         <button
                           type="button"
@@ -361,7 +367,7 @@ export default function KandidatPage() {
             </table>
           </div>
           {kandidats.length === 0 && (
-            <div className="text-center py-12 text-gray-400 font-medium">
+            <div className="text-center py-12 text-gray-400 font-medium text-xs sm:text-sm">
               Belum ada kandidat yang terdaftar. Gunakan tombol di atas untuk menambah atau mengimpor data.
             </div>
           )}

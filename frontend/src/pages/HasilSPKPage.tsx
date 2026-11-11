@@ -129,58 +129,58 @@ export default function HasilSPKPage() {
           </span>
         }
         actions={
-          <>
+          <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 w-full sm:w-auto">
             <button
               type="button"
               onClick={handleDownloadExcel}
               disabled={exportLoading}
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-lg text-xs font-bold transition shadow-2xs cursor-pointer"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2 sm:py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-lg text-xs font-bold transition shadow-2xs cursor-pointer"
             >
               <FileSpreadsheet size={15} className="text-emerald-600" />
-              Export Excel (.xlsx)
+              <span>Export Excel</span>
             </button>
             <button
               type="button"
               onClick={handleDownloadPDF}
               disabled={exportLoading}
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-200 rounded-lg text-xs font-bold transition shadow-2xs cursor-pointer"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-2 sm:py-2.5 bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-200 rounded-lg text-xs font-bold transition shadow-2xs cursor-pointer"
             >
               <FileText size={15} className="text-blue-600" />
-              Export Berita Acara PDF
+              <span>Export PDF</span>
             </button>
 
             {!isLocked ? (
               <button
                 type="button"
                 onClick={() => setShowLockConfirm(true)}
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-bold transition shadow-xs cursor-pointer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2 sm:py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-bold transition shadow-xs cursor-pointer"
               >
                 <Lock size={14} />
-                Kunci Hasil Pleno
+                <span>Kunci Hasil Pleno</span>
               </button>
             ) : (
-              <span className="text-xs text-gray-400 font-semibold px-3 py-2 bg-gray-100 rounded-lg border border-gray-200 flex items-center gap-1">
+              <span className="text-xs text-gray-400 font-semibold px-3 py-2 bg-gray-100 rounded-lg border border-gray-200 inline-flex items-center gap-1 justify-center w-full sm:w-auto">
                 <Lock size={13} /> Sesi Terkunci
               </span>
             )}
-          </>
+          </div>
         }
       />
 
       {/* Bagian A: Summary Cards (Statistik Kuota Divisi) */}
       <div className="space-y-2">
-        <h3 className="text-sm font-bold uppercase tracking-wider text-gray-500">
+        <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-gray-500">
           A. Indikator Pemenuhan Kuota Real-Time
         </h3>
         <SummaryCards cards={summary_cards} />
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex items-center gap-2 border-b border-gray-200 pt-2">
+      <div className="flex items-center gap-2 border-b border-gray-200 pt-2 overflow-x-auto pb-0.5">
         <button
           type="button"
           onClick={() => setActiveTab('matrix')}
-          className={`inline-flex items-center gap-2 px-4 py-2.5 text-sm font-bold border-b-2 transition cursor-pointer ${
+          className={`inline-flex items-center gap-2 px-3.5 sm:px-4 py-2.5 text-xs sm:text-sm font-bold border-b-2 transition cursor-pointer whitespace-nowrap shrink-0 ${
             activeTab === 'matrix'
               ? 'border-blue-600 text-blue-600'
               : 'border-transparent text-gray-500 hover:text-gray-900'
@@ -192,7 +192,7 @@ export default function HasilSPKPage() {
         <button
           type="button"
           onClick={() => setActiveTab('divisi')}
-          className={`inline-flex items-center gap-2 px-4 py-2.5 text-sm font-bold border-b-2 transition cursor-pointer ${
+          className={`inline-flex items-center gap-2 px-3.5 sm:px-4 py-2.5 text-xs sm:text-sm font-bold border-b-2 transition cursor-pointer whitespace-nowrap shrink-0 ${
             activeTab === 'divisi'
               ? 'border-blue-600 text-blue-600'
               : 'border-transparent text-gray-500 hover:text-gray-900'
@@ -219,13 +219,13 @@ export default function HasilSPKPage() {
 
       {activeTab === 'divisi' && (
         <div className="space-y-4">
-          <div className="flex items-center gap-2 overflow-x-auto pb-1">
+          <div className="flex items-center gap-2 overflow-x-auto pb-2">
             {divisis.map((d) => (
               <button
                 key={d.id}
                 type="button"
                 onClick={() => setActiveDivisiId(d.id)}
-                className={`px-4 py-2 rounded text-xs font-bold whitespace-nowrap transition cursor-pointer ${
+                className={`px-3.5 sm:px-4 py-2 rounded text-xs font-bold whitespace-nowrap shrink-0 transition cursor-pointer ${
                   activeDivisiId === d.id
                     ? 'bg-blue-600 text-white shadow-xs'
                     : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'

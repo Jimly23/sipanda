@@ -65,7 +65,7 @@ export default function SPKPage() {
           <button
             type="button"
             onClick={() => setShowRunForm(true)}
-            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-xs transition cursor-pointer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-xs transition cursor-pointer"
           >
             <Play size={16} />
             Jalankan Perhitungan Baru
@@ -74,16 +74,16 @@ export default function SPKPage() {
       />
 
       {showRunForm && (
-        <div className="bg-gradient-to-r from-blue-50/80 to-indigo-50/80 rounded border border-blue-200 p-6 shadow-xs animate-in fade-in zoom-in-95 duration-150">
+        <div className="bg-gradient-to-r from-blue-50/80 to-indigo-50/80 rounded border border-blue-200 p-4 sm:p-6 shadow-xs animate-in fade-in zoom-in-95 duration-150">
           <div className="flex items-center gap-2 mb-2 text-blue-900 font-bold">
-            <Sparkles size={20} className="text-blue-600" />
+            <Sparkles size={20} className="text-blue-600 shrink-0" />
             <h3 className="text-base font-bold">Engine Profile Matching Multi-Stage Core Logic</h3>
           </div>
           <p className="text-xs text-blue-800/80 mb-5 leading-relaxed">
             Sistem akan menghitung GAP terhadap 7 parameter ideal divisi, membobotkan CF (60%) dan SF (40%), melakukan perangkingan peminatan awal, mendeteksi badge [DUPLIKAT], serta meredistribusi kandidat unallocated ke divisi kurang kuota via [REKOMENDASI CROSS-DIVISION].
           </p>
 
-          <form onSubmit={handleRun} className="flex flex-col sm:flex-row items-end gap-3">
+          <form onSubmit={handleRun} className="flex flex-col sm:flex-row items-stretch sm:items-end gap-3">
             <div className="flex-1 w-full">
               <label className="block text-xs font-bold uppercase tracking-wider text-blue-950 mb-1.5">
                 Nama Sesi / Acara Kepanitiaan
@@ -97,11 +97,11 @@ export default function SPKPage() {
                 required
               />
             </div>
-            <div className="flex gap-2 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
               <button
                 type="submit"
                 disabled={calculating}
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm font-semibold shadow-xs transition disabled:opacity-50 cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm font-semibold shadow-xs transition disabled:opacity-50 cursor-pointer"
               >
                 <Calculator size={16} />
                 {calculating ? 'Memproses 4 Tahap...' : 'Jalankan Perhitungan'}
@@ -109,7 +109,7 @@ export default function SPKPage() {
               <button
                 type="button"
                 onClick={() => setShowRunForm(false)}
-                className="px-4 py-2.5 bg-white border border-gray-300 text-gray-700 rounded text-sm font-semibold hover:bg-gray-50 transition cursor-pointer"
+                className="inline-flex items-center justify-center px-4 py-2.5 bg-white border border-gray-300 text-gray-700 rounded text-sm font-semibold hover:bg-gray-50 transition cursor-pointer"
               >
                 Batal
               </button>
@@ -119,7 +119,7 @@ export default function SPKPage() {
       )}
 
       {/* Sessions History List */}
-      <div className="bg-white rounded border border-gray-200 shadow-xs p-6 space-y-4">
+      <div className="bg-white rounded border border-gray-200 shadow-xs p-4 sm:p-6 space-y-4">
         <h3 className="text-base font-bold text-gray-900">Riwayat Sesi Perhitungan SPK</h3>
 
         {loading ? (
@@ -138,24 +138,24 @@ export default function SPKPage() {
               <div
                 key={s.id}
                 onClick={() => navigate(`/spk/${s.id}`)}
-                className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-4 px-3 hover:bg-blue-50/40 rounded transition cursor-pointer"
+                className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 py-4 px-3 hover:bg-blue-50/40 rounded transition cursor-pointer"
               >
-                <div className="flex items-center gap-3.5">
-                  <div className={`p-3 rounded ${s.status === 'locked' ? 'bg-rose-50 text-rose-600' : 'bg-blue-50 text-blue-600'}`}>
+                <div className="flex items-center gap-3.5 min-w-0">
+                  <div className={`p-3 rounded shrink-0 ${s.status === 'locked' ? 'bg-rose-50 text-rose-600' : 'bg-blue-50 text-blue-600'}`}>
                     {s.status === 'locked' ? <Lock size={20} /> : <Calculator size={20} />}
                   </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-gray-900 hover:text-blue-600 transition">
+                  <div className="min-w-0">
+                    <h4 className="text-sm font-bold text-gray-900 hover:text-blue-600 transition truncate">
                       {s.nama_sesi}
                     </h4>
                     <div className="flex items-center gap-2 mt-1 text-xs text-gray-400">
-                      <Clock size={12} />
-                      {s.calculated_at ? new Date(s.calculated_at).toLocaleString('id-ID') : '-'}
+                      <Clock size={12} className="shrink-0" />
+                      <span>{s.calculated_at ? new Date(s.calculated_at).toLocaleString('id-ID') : '-'}</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 self-end sm:self-center">
+                <div className="flex items-center justify-between sm:justify-end gap-2.5 w-full sm:w-auto pt-2 sm:pt-0 border-t border-gray-100 sm:border-0">
                   {statusBadge(s.status)}
                   <span className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded transition">
                     <Eye size={14} /> Detail Hasil <ChevronRight size={14} />

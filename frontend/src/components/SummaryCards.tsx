@@ -7,7 +7,7 @@ interface Props {
 
 export default function SummaryCards({ cards }: Props) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3.5 sm:gap-4">
       {cards.map((card) => {
         const isFulfill = card.terfulfill;
         const isRedist = card.via_redistribusi;
@@ -15,7 +15,7 @@ export default function SummaryCards({ cards }: Props) {
         return (
           <div
             key={card.divisi_id}
-            className={`bg-white rounded shadow-xs border p-5 transition-all ${
+            className={`bg-white rounded shadow-xs border p-4 sm:p-5 transition-all ${
               isFulfill
                 ? isRedist
                   ? 'border-l-4 border-l-blue-500 border-gray-200'
@@ -24,7 +24,7 @@ export default function SummaryCards({ cards }: Props) {
             }`}
           >
             <div className="flex items-start justify-between gap-2">
-              <div className="min-w-0">
+              <div className="min-w-0 flex-1">
                 <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 truncate" title={card.divisi_nama}>
                   {card.divisi_nama}
                 </p>
@@ -37,18 +37,18 @@ export default function SummaryCards({ cards }: Props) {
               <div className="shrink-0 p-2 rounded bg-gray-50">
                 {isFulfill ? (
                   isRedist ? (
-                    <RefreshCw className="text-blue-600 animate-spin-reverse" size={20} />
+                    <RefreshCw className="text-blue-600 animate-spin-reverse" size={18} />
                   ) : (
-                    <CheckCircle2 className="text-emerald-600" size={20} />
+                    <CheckCircle2 className="text-emerald-600" size={18} />
                   )
                 ) : (
-                  <AlertCircle className="text-amber-500" size={20} />
+                  <AlertCircle className="text-amber-500" size={18} />
                 )}
               </div>
             </div>
 
             <div className="mt-3 pt-3 border-t border-gray-100 flex items-center justify-between">
-              <span className="text-[11px] font-bold tracking-tight">
+              <span className="text-[10.5px] sm:text-[11px] font-bold tracking-tight">
                 {isFulfill ? (
                   isRedist ? (
                     <span className="text-blue-700 bg-blue-50 px-2 py-0.5 rounded">TERFULFILL (REDISTRIBUSI)</span>

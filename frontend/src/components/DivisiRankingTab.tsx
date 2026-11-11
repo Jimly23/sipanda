@@ -1,7 +1,7 @@
 import { useEffect, Fragment } from 'react';
 import { useSPK } from '../hooks/useSPK';
 import { TableSkeleton } from './Skeleton';
-import { CheckCircle2, RefreshCw, Lock, Minus } from 'lucide-react';
+import { CheckCircle2, RefreshCw, Lock, Minus, ArrowRight } from 'lucide-react';
 
 interface Props {
   sessionId: number;
@@ -25,10 +25,10 @@ export default function DivisiRankingTab({ sessionId, divisiId, isLocked, onAppr
 
   return (
     <div className="space-y-4">
-      <div className="bg-white p-5 rounded border border-gray-200 shadow-xs flex flex-wrap items-center justify-between gap-4">
+      <div className="bg-white p-4 sm:p-5 rounded border border-gray-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <div className="flex items-center gap-3">
-            <h3 className="text-lg font-bold text-gray-900">{divisi.nama}</h3>
+          <div className="flex items-center gap-2.5 sm:gap-3 flex-wrap">
+            <h3 className="text-base sm:text-lg font-bold text-gray-900">{divisi.nama}</h3>
             <span className="bg-blue-50 text-blue-700 text-xs font-semibold px-2.5 py-1 rounded border border-blue-100">
               Target Kuota: {kuota} Orang
             </span>
@@ -39,24 +39,30 @@ export default function DivisiRankingTab({ sessionId, divisiId, isLocked, onAppr
         </div>
 
         {direct_count < kuota && (
-          <div className="bg-amber-50 border border-amber-200 rounded px-3 py-2 text-xs text-amber-800">
+          <div className="bg-amber-50 border border-amber-200 rounded p-2.5 sm:p-3 text-xs text-amber-800 leading-relaxed max-w-md">
             ⚠️ <strong>Catatan Sistem:</strong> Peminat langsung (Pilihan 1 &amp; 2) hanya {direct_count} orang. Sisa {kuota - direct_count} orang dialokasikan dari unallocated candidates pool.
           </div>
         )}
       </div>
 
       <div className="bg-white rounded shadow-xs border border-gray-200 overflow-hidden">
+        {/* Mobile swipe hint */}
+        <div className="md:hidden px-4 py-2 bg-slate-50 border-b border-gray-200 text-[11px] text-gray-500 flex items-center justify-between">
+          <span>Geser tabel untuk melihat ranking dan aksi</span>
+          <ArrowRight size={13} className="text-gray-400" />
+        </div>
+
         <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left">
+          <table className="w-full text-sm text-left min-w-[760px]">
             <thead className="bg-gray-50 text-gray-700 text-xs uppercase font-semibold border-b border-gray-200">
               <tr>
-                <th className="px-4 py-3.5 text-center w-16">Rank</th>
-                <th className="px-4 py-3.5">Nama Kandidat</th>
-                <th className="px-4 py-3.5">NIM</th>
-                <th className="px-4 py-3.5">Pilihan Awal</th>
-                <th className="px-4 py-3.5 text-center">Skor PM Divisi</th>
-                <th className="px-4 py-3.5">Status Rekomendasi</th>
-                <th className="px-4 py-3.5 text-center">Keputusan Admin</th>
+                <th className="px-4 py-3.5 text-center w-16 whitespace-nowrap">Rank</th>
+                <th className="px-4 py-3.5 whitespace-nowrap">Nama Kandidat</th>
+                <th className="px-4 py-3.5 whitespace-nowrap">NIM</th>
+                <th className="px-4 py-3.5 whitespace-nowrap">Pilihan Awal</th>
+                <th className="px-4 py-3.5 text-center whitespace-nowrap">Skor PM Divisi</th>
+                <th className="px-4 py-3.5 whitespace-nowrap">Status Rekomendasi</th>
+                <th className="px-4 py-3.5 text-center whitespace-nowrap">Keputusan Admin</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -83,14 +89,14 @@ export default function DivisiRankingTab({ sessionId, divisiId, isLocked, onAppr
                           : 'bg-gray-50/70 opacity-60 hover:opacity-100'
                       }`}
                     >
-                      <td className="px-4 py-3.5 text-center font-bold text-gray-700">{item.rank}</td>
-                      <td className="px-4 py-3.5 font-medium text-gray-900">{item.nama}</td>
-                      <td className="px-4 py-3.5 font-mono text-xs text-gray-500 font-semibold">{item.nim}</td>
-                      <td className="px-4 py-3.5 text-xs text-gray-600">{item.pilihan_awal}</td>
-                      <td className="px-4 py-3.5 text-center font-mono font-bold text-blue-700">
+                      <td className="px-4 py-3.5 text-center font-bold text-gray-700 whitespace-nowrap">{item.rank}</td>
+                      <td className="px-4 py-3.5 font-medium text-gray-900 whitespace-nowrap">{item.nama}</td>
+                      <td className="px-4 py-3.5 font-mono text-xs text-gray-500 font-semibold whitespace-nowrap">{item.nim}</td>
+                      <td className="px-4 py-3.5 text-xs text-gray-600 whitespace-nowrap">{item.pilihan_awal}</td>
+                      <td className="px-4 py-3.5 text-center font-mono font-bold text-blue-700 whitespace-nowrap">
                         {item.skor_pm?.toFixed(2) ?? '0.00'}
                       </td>
-                      <td className="px-4 py-3.5">
+                      <td className="px-4 py-3.5 whitespace-nowrap">
                         {item.status === 'cross_division' ? (
                           <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-semibold bg-blue-100 text-blue-800 border border-blue-200">
                             <RefreshCw size={12} className="animate-spin-reverse" />
@@ -103,7 +109,7 @@ export default function DivisiRankingTab({ sessionId, divisiId, isLocked, onAppr
                           </span>
                         )}
                       </td>
-                      <td className="px-4 py-3.5 text-center">
+                      <td className="px-4 py-3.5 text-center whitespace-nowrap">
                         {!isLocked ? (
                           <button
                             type="button"
@@ -132,7 +138,7 @@ export default function DivisiRankingTab({ sessionId, divisiId, isLocked, onAppr
           </table>
         </div>
         {rankings.length === 0 && (
-          <div className="text-center py-10 text-gray-400 text-sm">
+          <div className="text-center py-10 text-gray-400 text-xs sm:text-sm">
             Tidak ada kandidat untuk divisi ini.
           </div>
         )}
