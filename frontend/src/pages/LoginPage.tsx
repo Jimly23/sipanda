@@ -40,7 +40,18 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen w-full relative flex items-center justify-center p-4 overflow-hidden bg-[#f4f2fb]">
+    <div className="min-h-screen w-full relative flex items-center justify-center p-4 overflow-hidden bg-gradient-to-b from-[#eaf4fd] via-[#f1f7fe] to-[#f6fafe]">
+      {/* Soft Blue Atmospheric Background Glow Elements */}
+      <div className="absolute -top-28 -left-28 w-[420px] h-[420px] rounded-full bg-blue-200/55 blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-32 -right-32 w-[480px] h-[480px] rounded-full bg-sky-200/50 blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[640px] h-[640px] rounded-full bg-blue-100/50 blur-3xl pointer-events-none" />
+
+      {/* Floating subtle soft blue accent dots */}
+      <div className="absolute top-[20%] left-[16%] w-3 h-3 rounded-full bg-blue-300/40 pointer-events-none" />
+      <div className="absolute top-[32%] right-[18%] w-4 h-4 rounded-full bg-sky-300/35 pointer-events-none" />
+      <div className="absolute bottom-[24%] left-[22%] w-2.5 h-2.5 rounded-full bg-blue-400/30 pointer-events-none" />
+      <div className="absolute bottom-[28%] right-[14%] w-3.5 h-3.5 rounded-full bg-sky-400/25 pointer-events-none" />
+
       {/* Top Left Brand */}
       <div className="absolute top-6 left-6 sm:top-8 sm:left-10 z-20 flex items-center gap-2.5">
         <div className="w-8 h-8 rounded-lg bg-black text-white flex items-center justify-center shadow-xs">
@@ -48,7 +59,7 @@ export default function LoginPage() {
             className="w-4 h-4 fill-current text-white"
             viewBox="0 0 24 24"
           >
-            <path d="M12 2a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4zm-6 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4zm12 0a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4zm-6 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4z" />
+            <path d="M12 2a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0 4-4 4 4 0 0 0-4-4zm-6 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4zm12 0a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4zm-6 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4z" />
           </svg>
         </div>
         <span className="font-extrabold text-base tracking-tight text-gray-900">
@@ -56,18 +67,18 @@ export default function LoginPage() {
         </span>
       </div>
 
-      {/* Concentric subtle circular rings in background */}
+      {/* Concentric subtle circular rings with soft blue strokes */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-        <div className="w-[480px] h-[480px] rounded-full border border-purple-200/50 absolute" />
-        <div className="w-[720px] h-[720px] rounded-full border border-purple-200/40 absolute" />
-        <div className="w-[960px] h-[960px] rounded-full border border-purple-200/30 absolute" />
-        <div className="w-[1240px] h-[1240px] rounded-full border border-purple-200/20 absolute" />
+        <div className="w-[480px] h-[480px] rounded-full border border-blue-200/60 absolute" />
+        <div className="w-[720px] h-[720px] rounded-full border border-blue-200/45 absolute" />
+        <div className="w-[960px] h-[960px] rounded-full border border-blue-200/35 absolute" />
+        <div className="w-[1240px] h-[1240px] rounded-full border border-blue-200/20 absolute" />
       </div>
 
       {/* Floating Center Card */}
-      <div className="relative z-10 w-full max-w-[400px] sm:max-w-[420px] rounded-[32px] bg-white border border-gray-100 shadow-2xl shadow-purple-900/10 p-7 sm:p-9 transition-all">
+      <div className="relative z-10 w-full max-w-[400px] sm:max-w-[420px] rounded-[32px] bg-white/95 backdrop-blur-xl border border-white/90 shadow-2xl shadow-blue-900/10 p-7 sm:p-9 transition-all">
         {/* Top Floating Action Icon */}
-        <div className="w-12 h-12 rounded-2xl bg-white border border-gray-100/90 shadow-sm flex items-center justify-center mx-auto mb-5 text-gray-800">
+        <div className="w-12 h-12 rounded-2xl bg-white border border-blue-100/80 shadow-xs flex items-center justify-center mx-auto mb-5 text-gray-800">
           <svg
             className="w-5 h-5 text-gray-800"
             viewBox="0 0 24 24"
