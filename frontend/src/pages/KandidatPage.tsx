@@ -113,17 +113,17 @@ export default function KandidatPage() {
   return (
     <div className="space-y-6">
       <Navbar
-        icon={<Users size={22} />}
+        icon={<Users size={20} />}
         title="Data Pendaftar / Kandidat"
-        subtitle="Kelola data pendaftar melalui form manual satu per satu atau impor massal berkas Excel"
+        subtitle="Kelola data pendaftar melalui form manual satu per satu atau impor massal berkas Excel."
         actions={
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-2.5 w-full sm:w-auto">
             <button
               type="button"
               onClick={() => setShowImport(true)}
-              className="inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-lg text-sm font-semibold shadow-xs transition cursor-pointer"
+              className="inline-flex items-center justify-center gap-1.5 bg-white border border-gray-200/80 hover:bg-gray-50 text-gray-700 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold shadow-2xs transition cursor-pointer"
             >
-              <UploadCloud size={16} />
+              <UploadCloud size={15} className="text-emerald-600" />
               Import Excel (.xlsx)
             </button>
             <button
@@ -132,9 +132,9 @@ export default function KandidatPage() {
                 resetForm();
                 setShowForm(true);
               }}
-              className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg text-sm font-semibold shadow-xs transition cursor-pointer"
+              className="inline-flex items-center justify-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold shadow-xs transition cursor-pointer"
             >
-              <Plus size={16} />
+              <Plus size={15} />
               Entri Manual
             </button>
           </div>
@@ -143,20 +143,20 @@ export default function KandidatPage() {
 
       {/* Form Tambah/Edit */}
       {showForm && (
-        <div className="bg-white rounded border border-blue-200 p-4 sm:p-6 shadow-xs animate-in fade-in zoom-in-95 duration-150">
-          <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-100">
-            <h3 className="text-base font-bold text-gray-900">
+        <div className="bg-white rounded-2xl border border-gray-200/80 p-5 sm:p-6 shadow-xs animate-in fade-in zoom-in-95 duration-150">
+          <div className="flex items-center justify-between mb-4 pb-2 border-b border-gray-100">
+            <h3 className="text-sm font-bold text-gray-900">
               {editId ? 'Ubah Data Kandidat' : 'Form Entri Kandidat Manual'}
             </h3>
-            <button type="button" onClick={resetForm} className="text-gray-400 hover:text-gray-600 p-1 rounded">
-              <X size={18} />
+            <button type="button" onClick={resetForm} className="text-gray-400 hover:text-gray-600 p-1 rounded-lg">
+              <X size={16} />
             </button>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">
+                <label className="block text-xs font-semibold text-gray-600 mb-1.5">
                   NIM / ID Kandidat
                 </label>
                 <input
@@ -164,12 +164,12 @@ export default function KandidatPage() {
                   value={nim}
                   onChange={(e) => setNim(e.target.value)}
                   placeholder="Contoh: 230101"
-                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3.5 py-2 bg-gray-50/70 border border-gray-200/80 rounded-xl text-xs sm:text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                   required
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">
+                <label className="block text-xs font-semibold text-gray-600 mb-1.5">
                   Nama Lengkap
                 </label>
                 <input
@@ -177,7 +177,7 @@ export default function KandidatPage() {
                   value={nama}
                   onChange={(e) => setNama(e.target.value)}
                   placeholder="Nama lengkap kandidat"
-                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3.5 py-2 bg-gray-50/70 border border-gray-200/80 rounded-xl text-xs sm:text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                   required
                 />
               </div>
@@ -185,13 +185,13 @@ export default function KandidatPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">
+                <label className="block text-xs font-semibold text-gray-600 mb-1.5">
                   Pilihan Divisi 1
                 </label>
                 <select
                   value={pilihan1}
                   onChange={(e) => setPilihan1(Number(e.target.value))}
-                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3.5 py-2 bg-gray-50/70 border border-gray-200/80 rounded-xl text-xs sm:text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                   required
                 >
                   <option value={0}>-- Pilih Divisi Prioritas 1 --</option>
@@ -201,13 +201,13 @@ export default function KandidatPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">
+                <label className="block text-xs font-semibold text-gray-600 mb-1.5">
                   Pilihan Divisi 2
                 </label>
                 <select
                   value={pilihan2}
                   onChange={(e) => setPilihan2(Number(e.target.value))}
-                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3.5 py-2 bg-gray-50/70 border border-gray-200/80 rounded-xl text-xs sm:text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                   required
                 >
                   <option value={0}>-- Pilih Divisi Prioritas 2 --</option>
@@ -220,7 +220,7 @@ export default function KandidatPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">
+                <label className="block text-xs font-semibold text-gray-600 mb-1.5">
                   Persentase Minat Pilihan 1 (K6) (%)
                 </label>
                 <input
@@ -229,12 +229,12 @@ export default function KandidatPage() {
                   max={100}
                   value={minat1}
                   onChange={(e) => setMinat1(Number(e.target.value))}
-                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3.5 py-2 bg-gray-50/70 border border-gray-200/80 rounded-xl text-xs sm:text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                   required
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">
+                <label className="block text-xs font-semibold text-gray-600 mb-1.5">
                   Persentase Minat Pilihan 2 (K7) (%)
                 </label>
                 <input
@@ -243,20 +243,20 @@ export default function KandidatPage() {
                   max={100}
                   value={minat2}
                   onChange={(e) => setMinat2(Number(e.target.value))}
-                  className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3.5 py-2 bg-gray-50/70 border border-gray-200/80 rounded-xl text-xs sm:text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                   required
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-2">
+              <label className="block text-xs font-semibold text-gray-600 mb-2">
                 Nilai Kompetensi Teknis (K1 s.d. K5: Skala 0–100)
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5 sm:gap-3">
                 {kompetensiParams.map((p) => (
-                  <div key={p.id} className="bg-gray-50 p-2.5 sm:p-3 rounded border border-gray-200">
-                    <span className="block text-xs font-mono font-bold text-blue-700">{p.kode}</span>
+                  <div key={p.id} className="bg-gray-50/70 p-2.5 rounded-xl border border-gray-200/80">
+                    <span className="block text-xs font-mono font-bold text-blue-600">{p.kode}</span>
                     <span className="block text-[11px] text-gray-500 truncate mb-1.5" title={p.nama}>{p.nama}</span>
                     <input
                       type="number"
@@ -266,25 +266,25 @@ export default function KandidatPage() {
                       onChange={(e) =>
                         setNilaiMap((prev) => ({ ...prev, [p.id]: Number(e.target.value) }))
                       }
-                      className="w-full text-center px-2 py-1.5 bg-white border border-gray-200 rounded text-sm font-mono font-bold focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full text-center px-2 py-1.5 bg-white border border-gray-200/80 rounded-lg text-xs sm:text-sm font-mono font-bold focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                     />
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-2.5 pt-2">
+            <div className="flex flex-col sm:flex-row gap-2 pt-2">
               <button
                 type="submit"
-                className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 bg-blue-600 text-white rounded text-sm font-semibold hover:bg-blue-700 transition cursor-pointer"
+                className="inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-blue-600 text-white rounded-xl text-xs sm:text-sm font-semibold hover:bg-blue-700 transition shadow-xs cursor-pointer"
               >
-                <Check size={16} />
+                <Check size={15} />
                 {editId ? 'Perbarui Data' : 'Simpan Kandidat'}
               </button>
               <button
                 type="button"
                 onClick={resetForm}
-                className="inline-flex items-center justify-center px-4 py-2.5 border border-gray-300 text-gray-700 rounded text-sm font-semibold hover:bg-gray-50 transition cursor-pointer"
+                className="inline-flex items-center justify-center px-3.5 py-2 border border-gray-200 text-gray-700 rounded-xl text-xs sm:text-sm font-semibold hover:bg-gray-50 transition cursor-pointer"
               >
                 Batal
               </button>
@@ -297,67 +297,67 @@ export default function KandidatPage() {
       {loading ? (
         <TableSkeleton rows={8} cols={12} />
       ) : (
-        <div className="bg-white rounded shadow-xs border border-gray-200 overflow-hidden">
+        <div className="bg-white rounded-2xl shadow-xs border border-gray-200/80 overflow-hidden">
           {/* Mobile swipe hint */}
-          <div className="md:hidden px-4 py-2 bg-slate-50 border-b border-gray-200 text-[11px] text-gray-500 flex items-center justify-between">
+          <div className="md:hidden px-4 py-2 bg-gray-50 border-b border-gray-100 text-[11px] text-gray-500 flex items-center justify-between">
             <span>Geser tabel untuk melihat seluruh data kandidat</span>
             <ArrowRight size={13} className="text-gray-400" />
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left min-w-[980px]">
-              <thead className="bg-gray-50 text-gray-700 text-xs uppercase font-semibold border-b border-gray-200">
+            <table className="w-full text-xs sm:text-sm text-left min-w-[980px]">
+              <thead className="bg-gray-50/70 text-gray-500 text-[11px] uppercase font-semibold border-b border-gray-200/80">
                 <tr>
-                  <th className="px-4 py-3.5 text-center w-12 whitespace-nowrap">No</th>
-                  <th className="px-4 py-3.5 whitespace-nowrap">NIM</th>
-                  <th className="px-4 py-3.5 whitespace-nowrap">Nama Lengkap</th>
-                  <th className="px-4 py-3.5 whitespace-nowrap">Pilihan 1</th>
-                  <th className="px-4 py-3.5 whitespace-nowrap">Pilihan 2</th>
-                  <th className="px-4 py-3.5 text-center whitespace-nowrap">Minat P1 / P2</th>
+                  <th className="px-4 py-3 text-center w-12 whitespace-nowrap">No</th>
+                  <th className="px-4 py-3 whitespace-nowrap">NIM</th>
+                  <th className="px-4 py-3 whitespace-nowrap">Nama Lengkap</th>
+                  <th className="px-4 py-3 whitespace-nowrap">Pilihan 1</th>
+                  <th className="px-4 py-3 whitespace-nowrap">Pilihan 2</th>
+                  <th className="px-4 py-3 text-center whitespace-nowrap">Minat P1 / P2</th>
                   {kompetensiParams.map((p) => (
-                    <th key={p.id} className="px-3 py-3.5 text-center font-mono whitespace-nowrap">{p.kode}</th>
+                    <th key={p.id} className="px-3 py-3 text-center font-mono whitespace-nowrap">{p.kode}</th>
                   ))}
-                  <th className="px-4 py-3.5 text-center w-24 whitespace-nowrap">Aksi</th>
+                  <th className="px-4 py-3 text-center w-24 whitespace-nowrap">Aksi</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {kandidats.map((k, i) => (
-                  <tr key={k.id} className="hover:bg-gray-50/75 transition-colors">
-                    <td className="px-4 py-3.5 text-center font-bold text-gray-500">{i + 1}</td>
-                    <td className="px-4 py-3.5 font-mono text-xs font-semibold text-gray-800 whitespace-nowrap">{k.nim}</td>
-                    <td className="px-4 py-3.5 font-medium text-gray-900 whitespace-nowrap">{k.nama}</td>
-                    <td className="px-4 py-3.5 text-xs text-gray-700 whitespace-nowrap">{k.pilihan_divisi1?.nama || '-'}</td>
-                    <td className="px-4 py-3.5 text-xs text-gray-700 whitespace-nowrap">{k.pilihan_divisi2?.nama || '-'}</td>
-                    <td className="px-4 py-3.5 text-center text-xs font-semibold text-gray-600 whitespace-nowrap">
-                      <span className="bg-gray-100 px-2 py-0.5 rounded">
+                  <tr key={k.id} className="hover:bg-gray-50/60 transition-colors">
+                    <td className="px-4 py-3 text-center font-bold text-gray-400">{i + 1}</td>
+                    <td className="px-4 py-3 font-mono text-xs font-semibold text-gray-800 whitespace-nowrap">{k.nim}</td>
+                    <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{k.nama}</td>
+                    <td className="px-4 py-3 text-xs text-gray-700 whitespace-nowrap">{k.pilihan_divisi1?.nama || '-'}</td>
+                    <td className="px-4 py-3 text-xs text-gray-700 whitespace-nowrap">{k.pilihan_divisi2?.nama || '-'}</td>
+                    <td className="px-4 py-3 text-center text-xs font-semibold text-gray-600 whitespace-nowrap">
+                      <span className="bg-gray-100 px-2 py-0.5 rounded-full text-[11px]">
                         {k.minat_pilihan_1}% / {k.minat_pilihan_2}%
                       </span>
                     </td>
                     {kompetensiParams.map((p) => {
                       const nk = k.nilai_kandidats?.find((n) => n.parameter_id === p.id);
                       return (
-                        <td key={p.id} className="px-3 py-3.5 text-center font-mono text-xs font-semibold text-gray-700 whitespace-nowrap">
+                        <td key={p.id} className="px-3 py-3 text-center font-mono text-xs font-semibold text-gray-700 whitespace-nowrap">
                           {nk ? nk.nilai : '-'}
                         </td>
                       );
                     })}
-                    <td className="px-4 py-3.5 text-center whitespace-nowrap">
+                    <td className="px-4 py-3 text-center whitespace-nowrap">
                       <div className="flex items-center justify-center gap-1.5">
                         <button
                           type="button"
                           onClick={() => handleEdit(k)}
-                          className="p-1.5 text-blue-600 hover:bg-blue-50 rounded transition cursor-pointer"
+                          className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition cursor-pointer"
                           title="Edit Data"
                         >
-                          <Pencil size={15} />
+                          <Pencil size={14} />
                         </button>
                         <button
                           type="button"
                           onClick={() => setDeleteId(k.id)}
-                          className="p-1.5 text-rose-600 hover:bg-rose-50 rounded transition cursor-pointer"
+                          className="p-1.5 text-rose-600 hover:bg-rose-50 rounded-lg transition cursor-pointer"
                           title="Hapus Data"
                         >
-                          <Trash2 size={15} />
+                          <Trash2 size={14} />
                         </button>
                       </div>
                     </td>

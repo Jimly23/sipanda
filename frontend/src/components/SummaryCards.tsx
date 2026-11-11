@@ -15,12 +15,12 @@ export default function SummaryCards({ cards }: Props) {
         return (
           <div
             key={card.divisi_id}
-            className={`bg-white rounded shadow-xs border p-4 sm:p-5 transition-all ${
+            className={`bg-white rounded-2xl shadow-xs border p-4 sm:p-5 transition-all flex flex-col justify-between ${
               isFulfill
                 ? isRedist
-                  ? 'border-l-4 border-l-blue-500 border-gray-200'
-                  : 'border-l-4 border-l-emerald-500 border-gray-200'
-                : 'border-l-4 border-l-amber-500 border-gray-200'
+                  ? 'border-l-4 border-l-blue-500 border-gray-200/80'
+                  : 'border-l-4 border-l-emerald-500 border-gray-200/80'
+                : 'border-l-4 border-l-amber-500 border-gray-200/80'
             }`}
           >
             <div className="flex items-start justify-between gap-2">
@@ -29,34 +29,34 @@ export default function SummaryCards({ cards }: Props) {
                   {card.divisi_nama}
                 </p>
                 <div className="flex items-baseline gap-1 mt-2">
-                  <span className="text-2xl font-bold text-gray-900">{card.terisi}</span>
+                  <span className="text-2xl font-bold tracking-tight text-gray-900">{card.terisi}</span>
                   <span className="text-sm font-medium text-gray-400">/ {card.kuota}</span>
                 </div>
               </div>
 
-              <div className="shrink-0 p-2 rounded bg-gray-50">
+              <div className="shrink-0 p-2 rounded-xl bg-gray-50/80 border border-gray-100">
                 {isFulfill ? (
                   isRedist ? (
-                    <RefreshCw className="text-blue-600 animate-spin-reverse" size={18} />
+                    <RefreshCw className="text-blue-600 animate-spin-reverse" size={17} />
                   ) : (
-                    <CheckCircle2 className="text-emerald-600" size={18} />
+                    <CheckCircle2 className="text-emerald-600" size={17} />
                   )
                 ) : (
-                  <AlertCircle className="text-amber-500" size={18} />
+                  <AlertCircle className="text-amber-500" size={17} />
                 )}
               </div>
             </div>
 
             <div className="mt-3 pt-3 border-t border-gray-100 flex items-center justify-between">
-              <span className="text-[10.5px] sm:text-[11px] font-bold tracking-tight">
+              <span className="text-[10px] sm:text-[11px] font-semibold tracking-tight">
                 {isFulfill ? (
                   isRedist ? (
-                    <span className="text-blue-700 bg-blue-50 px-2 py-0.5 rounded">TERFULFILL (REDISTRIBUSI)</span>
+                    <span className="text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100">TERFULFILL (REDISTRIBUSI)</span>
                   ) : (
-                    <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">TERFULFILL</span>
+                    <span className="text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">TERFULFILL</span>
                   )
                 ) : (
-                  <span className="text-amber-700 bg-amber-50 px-2 py-0.5 rounded">KURANG KUOTA</span>
+                  <span className="text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-100">KURANG KUOTA</span>
                 )}
               </span>
             </div>

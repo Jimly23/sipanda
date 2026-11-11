@@ -25,11 +25,11 @@ export default function DivisiRankingTab({ sessionId, divisiId, isLocked, onAppr
 
   return (
     <div className="space-y-4">
-      <div className="bg-white p-4 sm:p-5 rounded border border-gray-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
+      <div className="bg-white p-5 rounded-2xl border border-gray-200/80 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
           <div className="flex items-center gap-2.5 sm:gap-3 flex-wrap">
             <h3 className="text-base sm:text-lg font-bold text-gray-900">{divisi.nama}</h3>
-            <span className="bg-blue-50 text-blue-700 text-xs font-semibold px-2.5 py-1 rounded border border-blue-100">
+            <span className="bg-blue-50 text-blue-700 text-xs font-semibold px-2.5 py-1 rounded-full border border-blue-100">
               Target Kuota: {kuota} Orang
             </span>
           </div>
@@ -39,30 +39,30 @@ export default function DivisiRankingTab({ sessionId, divisiId, isLocked, onAppr
         </div>
 
         {direct_count < kuota && (
-          <div className="bg-amber-50 border border-amber-200 rounded p-2.5 sm:p-3 text-xs text-amber-800 leading-relaxed max-w-md">
+          <div className="bg-amber-50/80 border border-amber-200/80 rounded-xl p-3 text-xs text-amber-800 leading-relaxed max-w-md">
             ⚠️ <strong>Catatan Sistem:</strong> Peminat langsung (Pilihan 1 &amp; 2) hanya {direct_count} orang. Sisa {kuota - direct_count} orang dialokasikan dari unallocated candidates pool.
           </div>
         )}
       </div>
 
-      <div className="bg-white rounded shadow-xs border border-gray-200 overflow-hidden">
+      <div className="bg-white rounded-2xl shadow-xs border border-gray-200/80 overflow-hidden">
         {/* Mobile swipe hint */}
-        <div className="md:hidden px-4 py-2 bg-slate-50 border-b border-gray-200 text-[11px] text-gray-500 flex items-center justify-between">
+        <div className="md:hidden px-4 py-2 bg-gray-50 border-b border-gray-100 text-[11px] text-gray-500 flex items-center justify-between">
           <span>Geser tabel untuk melihat ranking dan aksi</span>
           <ArrowRight size={13} className="text-gray-400" />
         </div>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left min-w-[760px]">
-            <thead className="bg-gray-50 text-gray-700 text-xs uppercase font-semibold border-b border-gray-200">
+          <table className="w-full text-xs sm:text-sm text-left min-w-[760px]">
+            <thead className="bg-gray-50/70 text-gray-500 text-[11px] uppercase font-semibold border-b border-gray-200/80">
               <tr>
-                <th className="px-4 py-3.5 text-center w-16 whitespace-nowrap">Rank</th>
-                <th className="px-4 py-3.5 whitespace-nowrap">Nama Kandidat</th>
-                <th className="px-4 py-3.5 whitespace-nowrap">NIM</th>
-                <th className="px-4 py-3.5 whitespace-nowrap">Pilihan Awal</th>
-                <th className="px-4 py-3.5 text-center whitespace-nowrap">Skor PM Divisi</th>
-                <th className="px-4 py-3.5 whitespace-nowrap">Status Rekomendasi</th>
-                <th className="px-4 py-3.5 text-center whitespace-nowrap">Keputusan Admin</th>
+                <th className="px-4 py-3 text-center w-16 whitespace-nowrap">Rank</th>
+                <th className="px-4 py-3 whitespace-nowrap">Nama Kandidat</th>
+                <th className="px-4 py-3 whitespace-nowrap">NIM</th>
+                <th className="px-4 py-3 whitespace-nowrap">Pilihan Awal</th>
+                <th className="px-4 py-3 text-center whitespace-nowrap">Skor PM Divisi</th>
+                <th className="px-4 py-3 whitespace-nowrap">Status Rekomendasi</th>
+                <th className="px-4 py-3 text-center whitespace-nowrap">Keputusan Admin</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -72,7 +72,7 @@ export default function DivisiRankingTab({ sessionId, divisiId, isLocked, onAppr
                 return (
                   <Fragment key={item.hasil_pm_id}>
                     {showCutoff && (
-                      <tr className="bg-rose-50/70 border-y-2 border-dashed border-rose-300">
+                      <tr className="bg-rose-50/70 border-y border-dashed border-rose-300">
                         <td colSpan={7} className="px-4 py-2 text-center text-xs font-bold text-rose-700 tracking-wider">
                           <span className="inline-flex items-center gap-1.5">
                             <Minus size={14} /> GARIS CUT-OFF KUOTA ({kuota} BESAR) <Minus size={14} />
@@ -83,43 +83,43 @@ export default function DivisiRankingTab({ sessionId, divisiId, isLocked, onAppr
                     <tr
                       className={`transition-colors ${
                         item.status === 'cross_division'
-                          ? 'bg-blue-50/50 hover:bg-blue-50'
+                          ? 'bg-blue-50/40 hover:bg-blue-50/60'
                           : item.in_quota
-                          ? 'bg-white hover:bg-gray-50'
+                          ? 'bg-white hover:bg-gray-50/70'
                           : 'bg-gray-50/70 opacity-60 hover:opacity-100'
                       }`}
                     >
-                      <td className="px-4 py-3.5 text-center font-bold text-gray-700 whitespace-nowrap">{item.rank}</td>
-                      <td className="px-4 py-3.5 font-medium text-gray-900 whitespace-nowrap">{item.nama}</td>
-                      <td className="px-4 py-3.5 font-mono text-xs text-gray-500 font-semibold whitespace-nowrap">{item.nim}</td>
-                      <td className="px-4 py-3.5 text-xs text-gray-600 whitespace-nowrap">{item.pilihan_awal}</td>
-                      <td className="px-4 py-3.5 text-center font-mono font-bold text-blue-700 whitespace-nowrap">
+                      <td className="px-4 py-3 text-center font-bold text-gray-700 whitespace-nowrap">{item.rank}</td>
+                      <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{item.nama}</td>
+                      <td className="px-4 py-3 font-mono text-xs text-gray-400 font-semibold whitespace-nowrap">{item.nim}</td>
+                      <td className="px-4 py-3 text-xs text-gray-500 whitespace-nowrap">{item.pilihan_awal}</td>
+                      <td className="px-4 py-3 text-center font-mono font-bold text-blue-600 whitespace-nowrap">
                         {item.skor_pm?.toFixed(2) ?? '0.00'}
                       </td>
-                      <td className="px-4 py-3.5 whitespace-nowrap">
+                      <td className="px-4 py-3 whitespace-nowrap">
                         {item.status === 'cross_division' ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-semibold bg-blue-100 text-blue-800 border border-blue-200">
-                            <RefreshCw size={12} className="animate-spin-reverse" />
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100">
+                            <RefreshCw size={11} className="animate-spin-reverse" />
                             {item.rekomendasi}
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                            <CheckCircle2 size={12} />
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">
+                            <CheckCircle2 size={11} />
                             {item.rekomendasi || 'Direct Choice Match'}
                           </span>
                         )}
                       </td>
-                      <td className="px-4 py-3.5 text-center whitespace-nowrap">
+                      <td className="px-4 py-3 text-center whitespace-nowrap">
                         {!isLocked ? (
                           <button
                             type="button"
                             onClick={() => onApprove(item.hasil_pm_id)}
-                            className={`text-xs px-3.5 py-1.5 rounded font-medium transition cursor-pointer shadow-2xs ${
+                            className={`text-xs px-3.5 py-1.5 rounded-xl font-medium transition cursor-pointer shadow-2xs ${
                               item.is_approved
                                 ? 'bg-emerald-600 text-white hover:bg-emerald-700'
                                 : item.status === 'cross_division'
                                 ? 'bg-blue-600 text-white hover:bg-blue-700'
-                                : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                                : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
                             }`}
                           >
                             {item.is_approved ? '✓ Fix' : item.status === 'cross_division' ? '[ Approve ]' : '[ Fix ]'}

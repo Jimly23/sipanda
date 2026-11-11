@@ -58,9 +58,9 @@ export default function DivisiPage() {
   return (
     <div className="space-y-6">
       <Navbar
-        icon={<Building2 size={22} />}
+        icon={<Building2 size={20} />}
         title="Master Data Divisi"
-        subtitle="Konfigurasi daftar divisi kepanitiaan dan batas kuota maksimal anggota"
+        subtitle="Konfigurasi daftar divisi kepanitiaan dan batas kuota maksimal anggota."
         actions={
           <button
             type="button"
@@ -68,28 +68,28 @@ export default function DivisiPage() {
               resetForm();
               setShowForm(!showForm);
             }}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg text-sm font-semibold shadow-xs transition cursor-pointer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold shadow-xs transition cursor-pointer"
           >
-            <Plus size={16} />
+            <Plus size={15} />
             {showForm ? 'Tutup Form' : 'Tambah Divisi'}
           </button>
         }
       />
 
       {showForm && (
-        <div className="bg-white rounded border border-blue-200 p-4 sm:p-6 shadow-xs animate-in fade-in zoom-in-95 duration-150">
+        <div className="bg-white rounded-2xl border border-gray-200/80 p-5 sm:p-6 shadow-xs animate-in fade-in zoom-in-95 duration-150">
           <div className="flex items-center justify-between mb-4 pb-2 border-b border-gray-100">
-            <h3 className="text-base font-bold text-gray-900">
+            <h3 className="text-sm font-bold text-gray-900">
               {editId ? 'Ubah Informasi Divisi' : 'Tambah Divisi Baru'}
             </h3>
-            <button type="button" onClick={resetForm} className="text-gray-400 hover:text-gray-600 p-1 rounded">
-              <X size={18} />
+            <button type="button" onClick={resetForm} className="text-gray-400 hover:text-gray-600 p-1 rounded-lg">
+              <X size={16} />
             </button>
           </div>
 
           <form onSubmit={handleSubmit} className="flex flex-col md:flex-row items-stretch md:items-end gap-3 sm:gap-4">
             <div className="flex-1 w-full">
-              <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">
+              <label className="block text-xs font-semibold text-gray-600 mb-1.5">
                 Nama Divisi
               </label>
               <input
@@ -97,12 +97,12 @@ export default function DivisiPage() {
                 value={nama}
                 onChange={(e) => setNama(e.target.value)}
                 placeholder="Contoh: Acara, Humas, PDD..."
-                className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3.5 py-2 bg-gray-50/70 border border-gray-200/80 rounded-xl text-xs sm:text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                 required
               />
             </div>
             <div className="w-full md:w-36">
-              <label className="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">
+              <label className="block text-xs font-semibold text-gray-600 mb-1.5">
                 Target Kuota
               </label>
               <input
@@ -110,22 +110,22 @@ export default function DivisiPage() {
                 min={0}
                 value={kuota}
                 onChange={(e) => setKuota(Number(e.target.value))}
-                className="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3.5 py-2 bg-gray-50/70 border border-gray-200/80 rounded-xl text-xs sm:text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                 required
               />
             </div>
             <div className="flex gap-2 w-full md:w-auto">
               <button
                 type="submit"
-                className="flex-1 md:flex-none inline-flex items-center justify-center gap-1.5 px-5 py-2.5 bg-blue-600 text-white rounded text-sm font-semibold hover:bg-blue-700 transition cursor-pointer"
+                className="flex-1 md:flex-none inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-blue-600 text-white rounded-xl text-xs sm:text-sm font-semibold hover:bg-blue-700 transition shadow-xs cursor-pointer"
               >
-                <Check size={16} />
+                <Check size={15} />
                 {editId ? 'Perbarui' : 'Simpan'}
               </button>
               <button
                 type="button"
                 onClick={resetForm}
-                className="flex-1 md:flex-none inline-flex items-center justify-center px-4 py-2.5 border border-gray-300 text-gray-700 rounded text-sm font-semibold hover:bg-gray-50 transition cursor-pointer"
+                className="flex-1 md:flex-none inline-flex items-center justify-center px-3.5 py-2 border border-gray-200 text-gray-700 rounded-xl text-xs sm:text-sm font-semibold hover:bg-gray-50 transition cursor-pointer"
               >
                 Batal
               </button>
@@ -138,16 +138,16 @@ export default function DivisiPage() {
       {loading ? (
         <TableSkeleton rows={5} cols={6} />
       ) : (
-        <div className="bg-white rounded shadow-xs border border-gray-200 overflow-hidden">
+        <div className="bg-white rounded-2xl shadow-xs border border-gray-200/80 overflow-hidden">
           {/* Mobile swipe hint */}
-          <div className="md:hidden px-4 py-2 bg-slate-50 border-b border-gray-200 text-[11px] text-gray-500 flex items-center justify-between">
+          <div className="md:hidden px-4 py-2 bg-gray-50 border-b border-gray-100 text-[11px] text-gray-500 flex items-center justify-between">
             <span>Geser tabel ke samping untuk melihat seluruh data</span>
             <ArrowRight size={13} className="text-gray-400" />
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left min-w-[620px]">
-              <thead className="bg-gray-50 text-gray-700 text-xs uppercase font-semibold border-b border-gray-200">
+            <table className="w-full text-xs sm:text-sm text-left min-w-[620px]">
+              <thead className="bg-gray-50/70 text-gray-500 text-[11px] uppercase font-semibold border-b border-gray-200/80">
                 <tr>
                   <th className="px-5 py-3.5 text-center w-16 whitespace-nowrap">No</th>
                   <th className="px-5 py-3.5 whitespace-nowrap">Nama Divisi</th>
@@ -159,16 +159,16 @@ export default function DivisiPage() {
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {divisis.map((d, i) => (
-                  <tr key={d.id} className="hover:bg-gray-50/75 transition-colors">
-                    <td className="px-5 py-3.5 text-center font-bold text-gray-500">{i + 1}</td>
+                  <tr key={d.id} className="hover:bg-gray-50/60 transition-colors">
+                    <td className="px-5 py-3.5 text-center font-bold text-gray-400">{i + 1}</td>
                     <td className="px-5 py-3.5 font-semibold text-gray-900 whitespace-nowrap">
                       <div className="flex items-center gap-2">
-                        <Building2 size={16} className="text-blue-500 shrink-0" />
+                        <Building2 size={15} className="text-blue-500 shrink-0" />
                         {d.nama}
                       </div>
                     </td>
                     <td className="px-5 py-3.5 text-center whitespace-nowrap">
-                      <span className="font-mono font-bold bg-blue-50 text-blue-700 px-3 py-1 rounded text-xs">
+                      <span className="font-semibold bg-blue-50 text-blue-600 px-2.5 py-0.5 rounded-full text-xs">
                         {d.kuota} Orang
                       </span>
                     </td>
@@ -183,18 +183,18 @@ export default function DivisiPage() {
                         <button
                           type="button"
                           onClick={() => handleEdit(d)}
-                          className="p-1.5 text-blue-600 hover:bg-blue-50 rounded transition cursor-pointer"
+                          className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition cursor-pointer"
                           title="Edit Divisi"
                         >
-                          <Pencil size={15} />
+                          <Pencil size={14} />
                         </button>
                         <button
                           type="button"
                           onClick={() => setDeleteId(d.id)}
-                          className="p-1.5 text-rose-600 hover:bg-rose-50 rounded transition cursor-pointer"
+                          className="p-1.5 text-rose-600 hover:bg-rose-50 rounded-lg transition cursor-pointer"
                           title="Hapus Divisi"
                         >
-                          <Trash2 size={15} />
+                          <Trash2 size={14} />
                         </button>
                       </div>
                     </td>
