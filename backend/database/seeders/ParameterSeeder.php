@@ -18,7 +18,7 @@ class ParameterSeeder extends Seeder
             ['kode' => 'K4', 'nama' => 'Kompetensi Teknis 4', 'tipe' => 'kompetensi', 'faktor' => 'SF', 'bobot_persen' => 40],
             ['kode' => 'K5', 'nama' => 'Kompetensi Teknis 5', 'tipe' => 'kompetensi', 'faktor' => 'SF', 'bobot_persen' => 40],
             ['kode' => 'K6', 'nama' => 'Preferensi Minat Pilihan 1', 'tipe' => 'preferensi', 'faktor' => 'CF', 'bobot_persen' => 60],
-            ['kode' => 'K7', 'nama' => 'Preferensi Minat Pilihan 2', 'tipe' => 'preferensi', 'faktor' => 'SF', 'bobot_persen' => 40],
+            ['kode' => 'K7', 'nama' => 'Preferensi Minat Pilihan 2', 'tipe' => 'preferensi', 'faktor' => 'CF', 'bobot_persen' => 60],
         ];
 
         foreach ($params as $p) {
@@ -31,8 +31,8 @@ class ParameterSeeder extends Seeder
 
         foreach ($allDivisis as $divisi) {
             foreach ($allParams as $param) {
-                // Default target values
-                $defaultTarget = ($param->tipe === 'preferensi') ? 70.0 : 75.0;
+                // Default target values (skala 1-10)
+                $defaultTarget = ($param->tipe === 'preferensi') ? 10.0 : 8.0;
                 TargetValue::firstOrCreate(
                     [
                         'divisi_id' => $divisi->id,
@@ -40,6 +40,7 @@ class ParameterSeeder extends Seeder
                     ],
                     [
                         'target_value' => $defaultTarget,
+                        'faktor' => $param->faktor,
                     ]
                 );
             }

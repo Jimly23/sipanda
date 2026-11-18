@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TargetValue extends Model
 {
-    protected $fillable = ['divisi_id', 'parameter_id', 'target_value'];
+    protected $fillable = ['divisi_id', 'parameter_id', 'target_value', 'faktor'];
 
     public function divisi()
     {

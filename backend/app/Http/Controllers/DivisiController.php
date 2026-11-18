@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Divisi;
+use App\Models\Parameter;
+use App\Models\TargetValue;
 use Illuminate\Http\Request;
 
 class DivisiController extends Controller
@@ -22,6 +24,16 @@ class DivisiController extends Controller
         ]);
 
         $divisi = Divisi::create($request->only('nama', 'kuota'));
+
+        foreach (Parameter::all() as $parameter) {
+            TargetValue::create([
+                'divisi_id' => $divisi->id,
+                'parameter_id' => $parameter->id,
+                'target_value' => $parameter->tipe === 'preferensi' ? 10 : 8,
+                'faktor' => $parameter->faktor,
+            ]);
+        }
+
         return response()->json($divisi, 201);
     }
 

@@ -23,7 +23,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Master Parameter & Target Profil
     Route::get('/parameters', [ParameterController::class, 'index']);
+    Route::post('/parameters', [ParameterController::class, 'store']);
     Route::put('/parameters/{parameter}', [ParameterController::class, 'update']);
+    Route::delete('/parameters/{parameter}', [ParameterController::class, 'destroy']);
     Route::get('/target-values', [TargetValueController::class, 'index']);
     Route::post('/target-values/batch', [TargetValueController::class, 'batchUpdate']);
 

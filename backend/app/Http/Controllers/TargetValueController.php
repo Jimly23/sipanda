@@ -22,18 +22,23 @@ class TargetValueController extends Controller
             'target_values' => 'required|array',
             'target_values.*.divisi_id' => 'required|exists:divisis,id',
             'target_values.*.parameter_id' => 'required|exists:parameters,id',
-            'target_values.*.target_value' => 'required|numeric|min:0|max:100',
+            'target_values.*.target_value' => 'required|numeric|min:1|max:10',
+            'target_values.*.faktor' => 'sometimes|in:CF,SF',
         ]);
 
         foreach ($request->target_values as $tv) {
+            $data = ['target_value' => $tv['target_value']];
+
+            if (isset($tv['faktor'])) {
+                $data['faktor'] = $tv['faktor'];
+            }
+
             TargetValue::updateOrCreate(
                 [
                     'divisi_id' => $tv['divisi_id'],
                     'parameter_id' => $tv['parameter_id'],
                 ],
-                [
-                    'target_value' => $tv['target_value'],
-                ]
+                $data
             );
         }
 
