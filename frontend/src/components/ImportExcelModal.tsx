@@ -125,7 +125,7 @@ export default function ImportExcelModal({ isOpen, onClose, onImport }: Props) {
           <div className="text-xs text-blue-900 flex-1">
             <p className="font-semibold">Perlu template impor?</p>
             <p className="text-blue-700/90 mt-0.5 text-[11px]">
-              Unduh format template untuk memastikan kolom NIM, Nama, dan K1–K7 terpetakan sempurna.
+              Unduh format template untuk memastikan kolom NIM, Nama, dan K1–K7 terpetakan sempurna. Semua nilai K1–K7 wajib menggunakan skala 1–10.
             </p>
             <button
               type="button"

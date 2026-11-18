@@ -23,8 +23,8 @@ export default function KandidatPage() {
   const [nama, setNama] = useState('');
   const [pilihan1, setPilihan1] = useState<number>(0);
   const [pilihan2, setPilihan2] = useState<number>(0);
-  const [minat1, setMinat1] = useState(70);
-  const [minat2, setMinat2] = useState(30);
+  const [minat1, setMinat1] = useState(7);
+  const [minat2, setMinat2] = useState(3);
   const [nilaiMap, setNilaiMap] = useState<Record<number, number>>({});
 
   const kompetensiParams = parameters.filter((p) => p.tipe === 'kompetensi');
@@ -58,9 +58,9 @@ export default function KandidatPage() {
       pilihan_2_divisi_id: pilihan2,
       minat_pilihan_1: minat1,
       minat_pilihan_2: minat2,
-      nilai: Object.entries(nilaiMap).map(([pid, val]) => ({
-        parameter_id: Number(pid),
-        nilai: val,
+      nilai: kompetensiParams.map((p) => ({
+        parameter_id: p.id,
+        nilai: nilaiMap[p.id] ?? 5,
       })),
     };
     try {
@@ -105,8 +105,8 @@ export default function KandidatPage() {
     setNama('');
     setPilihan1(0);
     setPilihan2(0);
-    setMinat1(70);
-    setMinat2(30);
+    setMinat1(7);
+    setMinat2(3);
     setNilaiMap({});
   };
 
@@ -221,12 +221,13 @@ export default function KandidatPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
                 <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-                  Persentase Minat Pilihan 1 (K6) (%)
+                  Skor Minat Pilihan 1 (K6) — Skala 1–10
                 </label>
                 <input
                   type="number"
-                  min={0}
-                  max={100}
+                  min={1}
+                  max={10}
+                  step={0.1}
                   value={minat1}
                   onChange={(e) => setMinat1(Number(e.target.value))}
                   className="w-full px-3.5 py-2 bg-gray-50/70 border border-gray-200/80 rounded-xl text-xs sm:text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20"
@@ -235,12 +236,13 @@ export default function KandidatPage() {
               </div>
               <div>
                 <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-                  Persentase Minat Pilihan 2 (K7) (%)
+                  Skor Minat Pilihan 2 (K7) — Skala 1–10
                 </label>
                 <input
                   type="number"
-                  min={0}
-                  max={100}
+                  min={1}
+                  max={10}
+                  step={0.1}
                   value={minat2}
                   onChange={(e) => setMinat2(Number(e.target.value))}
                   className="w-full px-3.5 py-2 bg-gray-50/70 border border-gray-200/80 rounded-xl text-xs sm:text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20"
@@ -251,7 +253,7 @@ export default function KandidatPage() {
 
             <div>
               <label className="block text-xs font-semibold text-gray-600 mb-2">
-                Nilai Kompetensi Teknis (K1 s.d. K5: Skala 0–100)
+                Nilai Kompetensi Teknis (K1 s.d. K5: Skala 1–10)
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5 sm:gap-3">
                 {kompetensiParams.map((p) => (
@@ -260,9 +262,10 @@ export default function KandidatPage() {
                     <span className="block text-[11px] text-gray-500 truncate mb-1.5" title={p.nama}>{p.nama}</span>
                     <input
                       type="number"
-                      min={0}
-                      max={100}
-                      value={nilaiMap[p.id] ?? 0}
+                      min={1}
+                      max={10}
+                      step={0.1}
+                      value={nilaiMap[p.id] ?? 5}
                       onChange={(e) =>
                         setNilaiMap((prev) => ({ ...prev, [p.id]: Number(e.target.value) }))
                       }
@@ -313,7 +316,7 @@ export default function KandidatPage() {
                   <th className="px-4 py-3 whitespace-nowrap">Nama Lengkap</th>
                   <th className="px-4 py-3 whitespace-nowrap">Pilihan 1</th>
                   <th className="px-4 py-3 whitespace-nowrap">Pilihan 2</th>
-                  <th className="px-4 py-3 text-center whitespace-nowrap">Minat P1 / P2</th>
+                  <th className="px-4 py-3 text-center whitespace-nowrap">Minat P1 / P2 (1–10)</th>
                   {kompetensiParams.map((p) => (
                     <th key={p.id} className="px-3 py-3 text-center font-mono whitespace-nowrap">{p.kode}</th>
                   ))}
@@ -330,7 +333,7 @@ export default function KandidatPage() {
                     <td className="px-4 py-3 text-xs text-gray-700 whitespace-nowrap">{k.pilihan_divisi2?.nama || '-'}</td>
                     <td className="px-4 py-3 text-center text-xs font-semibold text-gray-600 whitespace-nowrap">
                       <span className="bg-gray-100 px-2 py-0.5 rounded-full text-[11px]">
-                        {k.minat_pilihan_1}% / {k.minat_pilihan_2}%
+                        {k.minat_pilihan_1} / {k.minat_pilihan_2}
                       </span>
                     </td>
                     {kompetensiParams.map((p) => {

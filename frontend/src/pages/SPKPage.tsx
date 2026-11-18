@@ -80,7 +80,7 @@ export default function SPKPage() {
             <h3 className="text-sm sm:text-base font-bold">Engine Profile Matching Multi-Stage Core Logic</h3>
           </div>
           <p className="text-xs text-gray-500 leading-relaxed">
-            Sistem akan menghitung GAP terhadap 7 parameter ideal divisi, membobotkan CF (60%) dan SF (40%), melakukan perangkingan peminatan awal, mendeteksi badge [DUPLIKAT], serta meredistribusi kandidat unallocated ke divisi kurang kuota via [REKOMENDASI CROSS-DIVISION].
+            Sistem akan menghitung GAP terhadap 5 kriteria kompetensi dan 1 kriteria preferensi aktif per divisi, membobotkan CF (60%) dan SF (40%), melakukan perangkingan peminatan awal, mendeteksi badge [DUPLIKAT], serta meredistribusi kandidat unallocated ke divisi kurang kuota via [REKOMENDASI CROSS-DIVISION].
           </p>
 
           <form onSubmit={handleRun} className="flex flex-col sm:flex-row items-stretch sm:items-end gap-3 pt-2">

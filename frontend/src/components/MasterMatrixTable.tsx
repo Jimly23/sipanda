@@ -58,7 +58,7 @@ export default function MasterMatrixTable({ data, isLocked, onApprove }: Props) 
               <th className="px-4 py-3 whitespace-nowrap">Nama Kandidat</th>
               <th className="px-4 py-3 whitespace-nowrap">Pilihan 1</th>
               <th className="px-4 py-3 whitespace-nowrap">Pilihan 2</th>
-              <th className="px-4 py-3 text-center whitespace-nowrap">Minat P1 / P2</th>
+              <th className="px-4 py-3 text-center whitespace-nowrap">Minat P1 / P2 (1–10)</th>
               <th className="px-4 py-3 text-center whitespace-nowrap">Skor P1</th>
               <th className="px-4 py-3 text-center whitespace-nowrap">Skor P2</th>
               <th className="px-4 py-3 whitespace-nowrap">Rekomendasi Sistem</th>
@@ -75,7 +75,7 @@ export default function MasterMatrixTable({ data, isLocked, onApprove }: Props) 
                 <td className="px-4 py-3 text-gray-600 whitespace-nowrap">{item.pilihan_2}</td>
                 <td className="px-4 py-3 text-center text-xs font-medium text-gray-600 whitespace-nowrap">
                   <span className="bg-gray-100 px-2 py-0.5 rounded-full text-[11px]">
-                    {item.minat_p1}% / {item.minat_p2}%
+                    {item.minat_p1} / {item.minat_p2}
                   </span>
                 </td>
                 <td className="px-4 py-3 text-center font-mono font-bold text-gray-800 whitespace-nowrap">
