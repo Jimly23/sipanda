@@ -116,7 +116,7 @@ class KandidatImport implements ToArray, WithHeadingRow
 
         $number = (float) $normalized;
 
-        if ($number < 1 || $number > 10) {
+        if ($number < 0 || $number > 10) {
             throw ValidationException::withMessages([
                 'file' => "Baris {$rowNumber}: kolom {$column} harus berada pada skala 1-10.",
             ]);
