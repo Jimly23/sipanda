@@ -60,23 +60,23 @@ export default function TopNavbar({ onToggleSidebar }: TopNavbarProps) {
         <button
           type="button"
           onClick={onToggleSidebar}
-          className="lg:hidden p-1.5 -ml-1 text-gray-500 hover:text-gray-900 hover:bg-white rounded-lg border border-gray-200/80 shadow-2xs transition cursor-pointer"
+          className="lg:hidden p-1.5 -ml-1 text-gray-500 hover:text-gray-900 hover:bg-white dark:text-gray-400 dark:hover:text-white dark:hover:bg-[#161c2c] rounded-lg border border-gray-200/80 dark:border-gray-800 shadow-2xs transition cursor-pointer"
           aria-label="Buka Menu Navigasi"
         >
           <Menu size={18} />
         </button>
 
         {/* Clean Breadcrumb */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-gray-400 font-medium">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-gray-400 dark:text-gray-500 font-medium">
           {breadcrumbs.map((crumb, idx) => (
             <div key={crumb.label} className="flex items-center gap-2">
-              {idx > 0 && <span className="text-gray-300">/</span>}
+              {idx > 0 && <span className="text-gray-300 dark:text-gray-600">/</span>}
               <Link
                 to={crumb.to}
                 className={`${
                   idx === breadcrumbs.length - 1
-                    ? 'text-gray-600 font-semibold'
-                    : 'text-gray-400 hover:text-gray-600 transition'
+                    ? 'text-gray-600 dark:text-gray-200 font-semibold'
+                    : 'text-gray-400 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition'
                 }`}
               >
                 {crumb.label}
