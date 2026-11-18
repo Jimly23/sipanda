@@ -18,13 +18,13 @@ export default function Layout() {
 
   if (loading) {
     return (
-      <div className="flex h-screen w-screen overflow-hidden bg-[#f8fafc]">
-        <aside className="hidden lg:block w-64 h-screen border-r border-gray-200/80 bg-white p-5 space-y-4 shrink-0">
+      <div className="flex h-screen w-screen overflow-hidden bg-[#f8fafc] dark:bg-[#090d16]">
+        <aside className="hidden lg:block w-64 h-screen border-r border-gray-200/80 dark:border-gray-800 bg-white dark:bg-[#0f1422] p-5 space-y-4 shrink-0">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-slate-200 animate-pulse" />
+            <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 animate-pulse" />
             <div className="space-y-1.5 flex-1">
-              <div className="h-4 bg-slate-200 rounded animate-pulse w-24" />
-              <div className="h-2.5 bg-slate-200 rounded animate-pulse w-16" />
+              <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded animate-pulse w-24" />
+              <div className="h-2.5 bg-slate-200 dark:bg-slate-700 rounded animate-pulse w-16" />
             </div>
           </div>
         </aside>
@@ -40,7 +40,7 @@ export default function Layout() {
   }
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-[#f8fafc]">
+    <div className="flex h-screen w-screen overflow-hidden bg-[#f8fafc] dark:bg-[#090d16] text-gray-900 dark:text-gray-100 transition-colors">
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <div className="flex-1 flex flex-col h-screen overflow-hidden min-w-0">
         <TopNavbar onToggleSidebar={() => setSidebarOpen((prev) => !prev)} />
