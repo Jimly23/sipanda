@@ -18,19 +18,19 @@ export default function TopNavbar({ onToggleSidebar }: TopNavbarProps) {
     if (path.startsWith('/divisi')) {
       return [
         { label: 'Dasbor', to: '/dashboard' },
-        { label: 'Recruitment', to: '/divisi' },
+        { label: 'Divisi & Kuota', to: '/divisi' },
       ];
     }
     if (path.startsWith('/parameters')) {
       return [
         { label: 'Dasbor', to: '/dashboard' },
-        { label: 'Interview', to: '/parameters' },
+        { label: 'Parameter & Target', to: '/parameters' },
       ];
     }
     if (path.startsWith('/kandidat')) {
       return [
         { label: 'Dasbor', to: '/dashboard' },
-        { label: 'Onboarding', to: '/kandidat' },
+        { label: 'Data Kandidat', to: '/kandidat' },
       ];
     }
     if (path.startsWith('/spk/')) {

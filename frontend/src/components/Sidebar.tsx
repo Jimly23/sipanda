@@ -17,12 +17,22 @@ interface SidebarProps {
   onClose?: () => void;
 }
 
-const navItems = [
-  { to: '/dashboard', label: 'Dasbor', sublabel: 'Overview', icon: LayoutDashboard },
-  { to: '/divisi', label: 'Recruitment', sublabel: 'Master Divisi', icon: Building2 },
-  { to: '/parameters', label: 'Interview', sublabel: 'Parameter & Target', icon: SlidersHorizontal },
-  { to: '/kandidat', label: 'Onboarding', sublabel: 'Data Kandidat', icon: Users },
-  { to: '/spk', label: 'Perhitungan SPK', sublabel: 'Engine Profile Matching', icon: Calculator },
+const navSections = [
+  {
+    title: 'Analisis & Data',
+    items: [
+      { to: '/dashboard', label: 'Dasbor', sublabel: 'Ringkasan seleksi', icon: LayoutDashboard },
+      { to: '/kandidat', label: 'Data Kandidat', sublabel: 'Pendaftar & penilaian', icon: Users },
+      { to: '/spk', label: 'Perhitungan SPK', sublabel: 'Profile Matching', icon: Calculator },
+    ],
+  },
+  {
+    title: 'Pengaturan',
+    items: [
+      { to: '/divisi', label: 'Divisi & Kuota', sublabel: 'Master data divisi', icon: Building2 },
+      { to: '/parameters', label: 'Parameter & Target', sublabel: 'Kriteria & nilai ideal', icon: SlidersHorizontal },
+    ],
+  },
 ];
 
 export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
@@ -99,38 +109,43 @@ export default function Sidebar({ isOpen = false, onClose }: SidebarProps) {
           <ChevronDown size={14} className="text-gray-400 shrink-0 ml-1" />
         </div>
 
-        {/* Section Header */}
-        <div className="px-4 mb-2">
-          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
-            PENGATURAN
-          </p>
-        </div>
-
         {/* Navigation items */}
-        <nav className="flex-1 space-y-1 overflow-y-auto px-1">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              onClick={onClose}
-              className={({ isActive }) =>
-                `flex items-center gap-3 mx-2 px-3.5 py-2.5 text-xs sm:text-sm rounded-xl transition-all ${
-                  isActive
-                    ? 'bg-[#EEF4FF] text-blue-600 font-semibold shadow-2xs'
-                    : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50 font-medium'
-                }`
-              }
-            >
-              {({ isActive }) => (
-                <>
-                  <item.icon size={17} className={`shrink-0 ${isActive ? 'text-blue-600' : 'text-gray-400'}`} />
-                  <span className="truncate flex-1">{item.label}</span>
-                  {isActive && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0 ml-auto mr-0.5" />
-                  )}
-                </>
-              )}
-            </NavLink>
+        <nav className="flex-1 overflow-y-auto px-1 pb-2">
+          {navSections.map((section) => (
+            <div key={section.title} className="mb-4 last:mb-0">
+              <div className="px-4 mb-2 mt-1">
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                  {section.title}
+                </p>
+              </div>
+              <div className="space-y-1">
+                {section.items.map((item) => (
+                  <NavLink
+                    key={item.to}
+                    to={item.to}
+                    onClick={onClose}
+                    title={item.sublabel}
+                    className={({ isActive }) =>
+                      `flex items-center gap-3 mx-2 px-3.5 py-2.5 text-xs sm:text-sm rounded-xl transition-all ${
+                        isActive
+                          ? 'bg-[#EEF4FF] text-blue-600 font-semibold shadow-2xs'
+                          : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50 font-medium'
+                      }`
+                    }
+                  >
+                    {({ isActive }) => (
+                      <>
+                        <item.icon size={17} className={`shrink-0 ${isActive ? 'text-blue-600' : 'text-gray-400'}`} />
+                        <span className="truncate flex-1">{item.label}</span>
+                        {isActive && (
+                          <span className="w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0 ml-auto mr-0.5" />
+                        )}
+                      </>
+                    )}
+                  </NavLink>
+                ))}
+              </div>
+            </div>
           ))}
         </nav>
 

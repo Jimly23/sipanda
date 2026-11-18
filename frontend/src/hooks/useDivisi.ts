@@ -4,7 +4,7 @@ import type { Divisi } from '../types';
 
 export function useDivisi() {
   const [divisis, setDivisis] = useState<Divisi[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const fetchDivisis = useCallback(async () => {
     setLoading(true);
