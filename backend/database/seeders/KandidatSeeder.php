@@ -126,6 +126,7 @@ class KandidatSeeder extends Seeder
             ],
         ];
 
+        // Nilai contoh ditulis pada skala 0-100 lalu dikonversi ke skala 1-10.
         foreach ($dummyKandidats as $item) {
             $kandidat = Kandidat::updateOrCreate(
                 ['nim' => $item['nim']],
@@ -133,13 +134,13 @@ class KandidatSeeder extends Seeder
                     'nama' => $item['nama'],
                     'pilihan_1_divisi_id' => $item['p1'],
                     'pilihan_2_divisi_id' => $item['p2'],
-                    'minat_pilihan_1' => $item['m1'],
-                    'minat_pilihan_2' => $item['m2'],
+                    'minat_pilihan_1' => $item['m1'] / 10,
+                    'minat_pilihan_2' => $item['m2'] / 10,
                 ]
             );
 
             foreach ($params as $idx => $p) {
-                $nilai = $item['k'][$idx] ?? 75;
+                $nilai = ($item['k'][$idx] ?? 80) / 10;
                 NilaiKandidat::updateOrCreate(
                     [
                         'kandidat_id' => $kandidat->id,

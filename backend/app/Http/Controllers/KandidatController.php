@@ -26,11 +26,11 @@ class KandidatController extends Controller
             'nama' => 'required|string|max:255',
             'pilihan_1_divisi_id' => 'required|exists:divisis,id',
             'pilihan_2_divisi_id' => 'required|exists:divisis,id|different:pilihan_1_divisi_id',
-            'minat_pilihan_1' => 'required|numeric|min:0|max:100',
-            'minat_pilihan_2' => 'required|numeric|min:0|max:100',
+            'minat_pilihan_1' => 'required|numeric|min:1|max:10',
+            'minat_pilihan_2' => 'required|numeric|min:1|max:10',
             'nilai' => 'sometimes|array',
             'nilai.*.parameter_id' => 'required_with:nilai|exists:parameters,id',
-            'nilai.*.nilai' => 'required_with:nilai|numeric|min:0|max:100',
+            'nilai.*.nilai' => 'required_with:nilai|numeric|min:1|max:10',
         ]);
 
         $kandidat = Kandidat::create($request->only([
@@ -68,11 +68,11 @@ class KandidatController extends Controller
             'nama' => 'sometimes|string|max:255',
             'pilihan_1_divisi_id' => 'sometimes|exists:divisis,id',
             'pilihan_2_divisi_id' => 'sometimes|exists:divisis,id',
-            'minat_pilihan_1' => 'sometimes|numeric|min:0|max:100',
-            'minat_pilihan_2' => 'sometimes|numeric|min:0|max:100',
+            'minat_pilihan_1' => 'sometimes|numeric|min:1|max:10',
+            'minat_pilihan_2' => 'sometimes|numeric|min:1|max:10',
             'nilai' => 'sometimes|array',
             'nilai.*.parameter_id' => 'required_with:nilai|exists:parameters,id',
-            'nilai.*.nilai' => 'required_with:nilai|numeric|min:0|max:100',
+            'nilai.*.nilai' => 'required_with:nilai|numeric|min:1|max:10',
         ]);
 
         $kandidat->update($request->only([

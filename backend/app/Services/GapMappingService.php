@@ -22,10 +22,19 @@ class GapMappingService
     public static function mapGapToBobot(float $gap): float
     {
         $rounded = (int) round($gap);
-        if ($rounded > 4) $rounded = 4;
-        if ($rounded < -4) $rounded = -4;
+        $clamped = self::clampGap($rounded);
 
-        return self::$gapTable[$rounded]['bobot'] ?? 1.0;
+        return self::$gapTable[$clamped]['bobot'] ?? 1.0;
+    }
+
+    /**
+     * Batasi GAP ke rentang tabel konversi (-4 s.d. +4).
+     * Selisih di luar rentang tidak memberi kontribusi berbeda,
+     * sehingga diperlakukan sama seperti GAP +4 atau -4.
+     */
+    private static function clampGap(int $gap): int
+    {
+        return max(-4, min(4, $gap));
     }
 
     public static function getGapTable(): array

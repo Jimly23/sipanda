@@ -25,7 +25,7 @@ class ProfileMatchingService
         $kandidats = Kandidat::with(['nilaiKandidats', 'pilihanDivisi1', 'pilihanDivisi2'])->get();
         $parameters = Parameter::all();
 
-        // TAHAP 1: Hitung PM All-to-All untuk 7 Parameter (5 Kompetensi + 2 Preferensi)
+        // TAHAP 1: Hitung PM All-to-All (5 Kompetensi + 1 Preferensi aktif per divisi)
         $allResults = $this->tahap1_calculateAllToAll($kandidats, $divisis, $parameters);
 
         // TAHAP 2: Filtering & Ranking Berdasarkan Pilihan 1 & 2 Kandidat
@@ -50,7 +50,8 @@ class ProfileMatchingService
 
     /**
      * TAHAP 1 — Kalkulasi Matriks All-to-All:
-     * Menghitung GAP, Bobot GAP, CF (4 kriteria), SF (3 kriteria), dan Skor Akhir untuk setiap kandidat di semua divisi
+     * Menghitung GAP, Bobot GAP, dan Skor Akhir untuk setiap kandidat di semua divisi.
+     * Hanya satu parameter preferensi (K6 atau K7) yang aktif per divisi.
      */
     private function tahap1_calculateAllToAll(Collection $kandidats, Collection $divisis, Collection $parameters): array
     {
@@ -63,49 +64,58 @@ class ProfileMatchingService
                 $cfScores = [];
                 $sfScores = [];
 
+                $activePreferenceCode = 'K6';
+                $activePreferenceValue = 0.0;
+
+                if ($kandidat->pilihan_1_divisi_id == $divisi->id) {
+                    $activePreferenceCode = 'K6';
+                    $activePreferenceValue = (float) $kandidat->minat_pilihan_1;
+                } elseif ($kandidat->pilihan_2_divisi_id == $divisi->id) {
+                    $activePreferenceCode = 'K7';
+                    $activePreferenceValue = (float) $kandidat->minat_pilihan_2;
+                }
+
                 foreach ($parameters as $param) {
                     $targetValueRecord = $divisi->targetValues
                         ->where('parameter_id', $param->id)
                         ->first();
-                    $targetRaw = $targetValueRecord ? (float) $targetValueRecord->target_value : 75.0;
+                    $targetRaw = $targetValueRecord
+                        ? (float) $targetValueRecord->target_value
+                        : ($param->tipe === 'preferensi' ? 10.0 : 8.0);
 
-                    // Logika Preferensi K6 & K7 sesuai brief:
-                    // Jika dievaluasi pada divisi Pilihan 1: K6 = minat_pilihan_1, K7 = 0
-                    // Jika dievaluasi pada divisi Pilihan 2: K7 = minat_pilihan_2, K6 = 0
-                    // Jika bukan Pilihan 1 maupun 2: K6 = 0, K7 = 0
-                    if ($param->kode === 'K6') {
-                        if ($kandidat->pilihan_1_divisi_id == $divisi->id) {
-                            $nilaiRaw = (float) $kandidat->minat_pilihan_1;
-                        } else {
-                            $nilaiRaw = 0.0;
+                    if ($param->tipe === 'preferensi') {
+                        if ($param->kode !== $activePreferenceCode) {
+                            continue;
                         }
-                    } elseif ($param->kode === 'K7') {
-                        if ($kandidat->pilihan_2_divisi_id == $divisi->id) {
-                            $nilaiRaw = (float) $kandidat->minat_pilihan_2;
-                        } else {
-                            $nilaiRaw = 0.0;
-                        }
-                    } else {
-                        // Kompetensi teknis K1-K5
-                        $nilaiRecord = $kandidat->nilaiKandidats
-                            ->where('parameter_id', $param->id)
-                            ->first();
-                        $nilaiRaw = $nilaiRecord ? (float) $nilaiRecord->nilai : 0.0;
+
+                        $gap = $activePreferenceValue - $targetRaw;
+                        $bobotGap = GapMappingService::mapGapToBobot($gap);
+
+                        $gapValues[$param->kode] = round($gap, 2);
+                        $bobotGapValues[$param->kode] = $bobotGap;
+
+                        // Parameter preferensi yang aktif selalu masuk Core Factor.
+                        $cfScores[] = $bobotGap;
+
+                        continue;
                     }
 
-                    // Konversi nilai 0-100 ke skala profil 1-5
-                    $nilaiScaled = $this->scaleToFive($nilaiRaw);
-                    $targetScaled = $this->scaleToFive($targetRaw);
+                    // Kompetensi teknis K1-K5
+                    $nilaiRecord = $kandidat->nilaiKandidats
+                        ->where('parameter_id', $param->id)
+                        ->first();
+                    $nilaiRaw = $nilaiRecord ? (float) $nilaiRecord->nilai : 1.0;
 
-                    // GAP = Nilai Kandidat - Target Value
-                    $gap = $nilaiScaled - $targetScaled;
+                    // GAP = Nilai Kandidat - Target Value (skala 1-10)
+                    $gap = $nilaiRaw - $targetRaw;
                     $bobotGap = GapMappingService::mapGapToBobot($gap);
 
                     $gapValues[$param->kode] = round($gap, 2);
                     $bobotGapValues[$param->kode] = $bobotGap;
 
-                    // Pengelompokan CF vs SF
-                    if ($param->faktor === 'CF') {
+                    $faktor = $targetValueRecord?->faktor ?? $param->faktor;
+
+                    if ($faktor === 'CF') {
                         $cfScores[] = $bobotGap;
                     } else {
                         $sfScores[] = $bobotGap;
@@ -387,17 +397,5 @@ class ProfileMatchingService
                 ]);
             }
         }
-    }
-
-    /**
-     * Konversi nilai skala 0-100 ke skala profil 1-5
-     */
-    private function scaleToFive(float $value): int
-    {
-        if ($value >= 81) return 5;
-        if ($value >= 61) return 4;
-        if ($value >= 41) return 3;
-        if ($value >= 21) return 2;
-        return 1;
     }
 }
