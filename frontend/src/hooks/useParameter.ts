@@ -27,15 +27,36 @@ export function useParameter() {
     fetchParameters();
   }, [fetchParameters]);
 
+  const createParameter = async (data: Omit<Parameter, 'id'>) => {
+    await api.post('/parameters', data);
+    await fetchParameters();
+  };
+
   const updateParameter = async (id: number, data: Partial<Parameter>) => {
     await api.put(`/parameters/${id}`, data);
     await fetchParameters();
   };
 
-  const batchUpdateTargetValues = async (tvs: { divisi_id: number; parameter_id: number; target_value: number }[]) => {
+  const deleteParameter = async (id: number) => {
+    await api.delete(`/parameters/${id}`);
+    await fetchParameters();
+  };
+
+  const batchUpdateTargetValues = async (
+    tvs: { divisi_id: number; parameter_id: number; target_value: number; faktor?: 'CF' | 'SF' }[]
+  ) => {
     await api.post('/target-values/batch', { target_values: tvs });
     await fetchParameters();
   };
 
-  return { parameters, targetValues, loading, fetchParameters, updateParameter, batchUpdateTargetValues };
+  return {
+    parameters,
+    targetValues,
+    loading,
+    fetchParameters,
+    createParameter,
+    updateParameter,
+    deleteParameter,
+    batchUpdateTargetValues,
+  };
 }

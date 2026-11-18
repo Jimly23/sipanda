@@ -28,6 +28,7 @@ export interface TargetValue {
   divisi_id: number;
   parameter_id: number;
   target_value: number;
+  faktor: 'CF' | 'SF';
   divisi?: Divisi;
   parameter?: Parameter;
 }
