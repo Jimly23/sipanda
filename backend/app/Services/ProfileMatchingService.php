@@ -49,6 +49,87 @@ class ProfileMatchingService
     }
 
     /**
+     * Hitung ulang ranking dan duplikat berdasarkan kondisi persetujuan saat ini.
+     * Kandidat yang sudah disetujui di divisi lain tidak ikut dihitung di divisi ini.
+     *
+     * @return array{rankings: array<int, int>, in_quota: array<int, bool>, duplicates: array<int, array<int, int>>}
+     */
+    public function resolveEffectiveDuplicates(Collection $hasilPMs, Collection $divisis): array
+    {
+        $approvedDivisiByKandidat = [];
+        foreach ($hasilPMs as $row) {
+            if ($row->is_approved && $row->alokasi_divisi_id) {
+                $approvedDivisiByKandidat[$row->kandidat_id] = (int) $row->alokasi_divisi_id;
+            }
+        }
+
+        $rankings = [];
+        $inQuota = [];
+        $activeDivisions = [];
+
+        foreach ($divisis as $divisi) {
+            $rows = $hasilPMs
+                ->where('divisi_id', $divisi->id)
+                ->filter(function ($row) use ($divisi, $approvedDivisiByKandidat) {
+                    $kandidat = $row->kandidat;
+                    if (!$kandidat) {
+                        return false;
+                    }
+
+                    $approvedDivisiId = $approvedDivisiByKandidat[$row->kandidat_id] ?? null;
+                    if ($approvedDivisiId !== null && $approvedDivisiId !== (int) $divisi->id) {
+                        return false;
+                    }
+
+                    return (int) $kandidat->pilihan_1_divisi_id === (int) $divisi->id
+                        || (int) $kandidat->pilihan_2_divisi_id === (int) $divisi->id;
+                })
+                ->sortBy('ranking')
+                ->values();
+
+            foreach ($rows as $index => $row) {
+                $rank = $index + 1;
+                $isInQuota = $rank <= (int) $divisi->kuota;
+
+                $rankings[$row->id] = $rank;
+                $inQuota[$row->id] = $isInQuota;
+
+                if ($isInQuota) {
+                    $activeDivisions[$row->kandidat_id][(int) $divisi->id] = true;
+                }
+            }
+        }
+
+        // Kandidat unallocated yang sudah dialokasikan cross-division juga dihitung
+        // sebagai terisi. Jika ia kemudian naik ke kuota divisi pilihannya, keduanya
+        // menjadi duplikat sampai admin memilih salah satu.
+        foreach ($hasilPMs as $row) {
+            if ($row->status !== 'cross_division' || !$row->alokasi_divisi_id) {
+                continue;
+            }
+
+            if (isset($approvedDivisiByKandidat[$row->kandidat_id])) {
+                continue;
+            }
+
+            $activeDivisions[$row->kandidat_id][(int) $row->alokasi_divisi_id] = true;
+        }
+
+        $duplicates = [];
+        foreach ($activeDivisions as $kandidatId => $divisiIds) {
+            if (count($divisiIds) > 1) {
+                $duplicates[$kandidatId] = array_keys($divisiIds);
+            }
+        }
+
+        return [
+            'rankings' => $rankings,
+            'in_quota' => $inQuota,
+            'duplicates' => $duplicates,
+        ];
+    }
+
+    /**
      * TAHAP 1 — Kalkulasi Matriks All-to-All:
      * Menghitung GAP, Bobot GAP, dan Skor Akhir untuk setiap kandidat di semua divisi.
      * Hanya satu parameter preferensi (K6 atau K7) yang aktif per divisi.
