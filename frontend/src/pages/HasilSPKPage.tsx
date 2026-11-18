@@ -58,9 +58,11 @@ export default function HasilSPKPage() {
     try {
       await approveKandidat(sid, hasilPmId, true);
       toast.success('Alokasi kandidat disetujui!');
-      fetchSessionDetail(sid);
+      await fetchSessionDetail(sid, true);
+      return true;
     } catch {
       toast.error('Gagal menyetujui');
+      return false;
     }
   };
 

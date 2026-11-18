@@ -1,21 +1,40 @@
-import { useEffect, Fragment } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 import { useSPK } from '../hooks/useSPK';
 import { TableSkeleton } from './Skeleton';
-import { CheckCircle2, RefreshCw, Lock, Minus, ArrowRight } from 'lucide-react';
+import { AlertTriangle, CheckCircle2, RefreshCw, Lock, Minus, ArrowRight } from 'lucide-react';
 
 interface Props {
   sessionId: number;
   divisiId: number;
   isLocked: boolean;
-  onApprove: (hasilPmId: number) => void;
+  onApprove: (hasilPmId: number) => Promise<boolean>;
 }
 
 export default function DivisiRankingTab({ sessionId, divisiId, isLocked, onApprove }: Props) {
-  const { divisiDetail, fetchDivisiDetail, loading } = useSPK();
+  const { divisiDetail, fetchDivisiDetail, markRankingApproved, loading } = useSPK();
+  const [approvingIds, setApprovingIds] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     fetchDivisiDetail(sessionId, divisiId);
   }, [sessionId, divisiId, fetchDivisiDetail]);
+
+  const handleApprove = async (hasilPmId: number) => {
+    setApprovingIds((prev) => new Set(prev).add(hasilPmId));
+
+    try {
+      const approved = await onApprove(hasilPmId);
+      if (approved) {
+        markRankingApproved(hasilPmId, true);
+        await fetchDivisiDetail(sessionId, divisiId, true);
+      }
+    } finally {
+      setApprovingIds((prev) => {
+        const next = new Set(prev);
+        next.delete(hasilPmId);
+        return next;
+      });
+    }
+  };
 
   if (loading || !divisiDetail) {
     return <TableSkeleton rows={6} cols={7} />;
@@ -68,6 +87,7 @@ export default function DivisiRankingTab({ sessionId, divisiId, isLocked, onAppr
             <tbody className="divide-y divide-gray-100">
               {rankings.map((item, idx) => {
                 const showCutoff = idx > 0 && rankings[idx - 1].in_quota && !item.in_quota && item.status !== 'cross_division';
+                const isApproving = approvingIds.has(item.hasil_pm_id);
 
                 return (
                   <Fragment key={item.hasil_pm_id}>
@@ -84,6 +104,8 @@ export default function DivisiRankingTab({ sessionId, divisiId, isLocked, onAppr
                       className={`transition-colors ${
                         item.status === 'cross_division'
                           ? 'bg-blue-50/40 hover:bg-blue-50/60'
+                          : item.status === 'duplikat'
+                          ? 'bg-amber-50/60 hover:bg-amber-50/80'
                           : item.in_quota
                           ? 'bg-white hover:bg-gray-50/70'
                           : 'bg-gray-50/70 opacity-60 hover:opacity-100'
@@ -97,7 +119,12 @@ export default function DivisiRankingTab({ sessionId, divisiId, isLocked, onAppr
                         {item.skor_pm?.toFixed(2) ?? '0.00'}
                       </td>
                       <td className="px-4 py-3 whitespace-nowrap">
-                        {item.status === 'cross_division' ? (
+                        {item.status === 'duplikat' ? (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-50 text-amber-800 border border-amber-100">
+                            <AlertTriangle size={11} />
+                            {item.rekomendasi || 'Duplikat'}
+                          </span>
+                        ) : item.status === 'cross_division' ? (
                           <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100">
                             <RefreshCw size={11} className="animate-spin-reverse" />
                             {item.rekomendasi}
@@ -113,16 +140,24 @@ export default function DivisiRankingTab({ sessionId, divisiId, isLocked, onAppr
                         {!isLocked ? (
                           <button
                             type="button"
-                            onClick={() => onApprove(item.hasil_pm_id)}
-                            className={`text-xs px-3.5 py-1.5 rounded-xl font-medium transition cursor-pointer shadow-2xs ${
+                            onClick={() => handleApprove(item.hasil_pm_id)}
+                            disabled={isApproving}
+                            className={`inline-flex items-center justify-center gap-1 text-xs px-3.5 py-1.5 rounded-xl font-medium transition cursor-pointer shadow-2xs disabled:cursor-wait ${
                               item.is_approved
                                 ? 'bg-emerald-600 text-white hover:bg-emerald-700'
                                 : item.status === 'cross_division'
                                 ? 'bg-blue-600 text-white hover:bg-blue-700'
                                 : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
-                            }`}
+                            } ${isApproving ? 'opacity-60' : ''}`}
                           >
-                            {item.is_approved ? '✓ Fix' : item.status === 'cross_division' ? '[ Approve ]' : '[ Fix ]'}
+                            {isApproving && <RefreshCw size={11} className="animate-spin" />}
+                            {isApproving
+                              ? 'Menyimpan...'
+                              : item.is_approved
+                              ? '✓ Fix'
+                              : item.status === 'cross_division'
+                              ? '[ Approve ]'
+                              : '[ Fix ]'}
                           </button>
                         ) : (
                           <span className="inline-flex items-center gap-1 text-xs text-gray-400">

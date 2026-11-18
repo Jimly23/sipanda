@@ -32,28 +32,41 @@ export function useSPK() {
     }
   };
 
-  const fetchSessionDetail = useCallback(async (sessionId: number) => {
-    setLoading(true);
+  const fetchSessionDetail = useCallback(async (sessionId: number, silent = false) => {
+    if (!silent) setLoading(true);
     try {
       const res = await api.get(`/spk/sessions/${sessionId}`);
       setSessionDetail(res.data);
     } catch (err) {
       console.error('Error fetching session detail:', err);
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
   }, []);
 
-  const fetchDivisiDetail = useCallback(async (sessionId: number, divisiId: number) => {
-    setLoading(true);
+  const fetchDivisiDetail = useCallback(async (sessionId: number, divisiId: number, silent = false) => {
+    if (!silent) setLoading(true);
     try {
       const res = await api.get(`/spk/sessions/${sessionId}/divisi/${divisiId}`);
       setDivisiDetail(res.data);
     } catch (err) {
       console.error('Error fetching divisi detail:', err);
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
+  }, []);
+
+  const markRankingApproved = useCallback((hasilPmId: number, isApproved: boolean) => {
+    setDivisiDetail((prev) => {
+      if (!prev) return prev;
+
+      return {
+        ...prev,
+        rankings: prev.rankings.map((item) =>
+          item.hasil_pm_id === hasilPmId ? { ...item, is_approved: isApproved } : item
+        ),
+      };
+    });
   }, []);
 
   const approveKandidat = async (sessionId: number, hasilPmId: number, isApproved: boolean, alokasiDivisiId?: number) => {
@@ -81,6 +94,7 @@ export function useSPK() {
     runCalculation,
     fetchSessionDetail,
     fetchDivisiDetail,
+    markRankingApproved,
     approveKandidat,
     lockSession,
   };
